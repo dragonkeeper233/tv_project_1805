@@ -19,8 +19,11 @@
         <com.wytv.cc.mytvapp.View.HomeDrawView
             android:id="@+id/screen_monitor"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:background="@drawable/home_content_bg"
             android:orientation="horizontal">
 
         </com.wytv.cc.mytvapp.View.HomeDrawView>
@@ -28,8 +31,17 @@
         <com.wytv.cc.mytvapp.View.HomeServerView
             android:id="@+id/screen_sever"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"></com.wytv.cc.mytvapp.View.HomeServerView>
+            android:layout_height="200dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/home_content_bg"
+            android:gravity="center"></com.wytv.cc.mytvapp.View.HomeServerView>
 
     </LinearLayout>
+
+    <com.wytv.cc.mytvapp.View.HomeDatabaseView
+        android:id="@+id/screen_database"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

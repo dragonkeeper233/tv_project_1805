@@ -41,4 +41,27 @@ public class CommonUtils {
         context.getResources().updateConfiguration(null, null);
     }
 
+    /**
+     * 根据手机分辨率从DP转成PX
+     * @param context
+     * @param dpValue
+     * @return
+     */
+    public static int dip2px(Context context, float dpValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    /**
+     * 根据手机的分辨率PX(像素)转成DP
+     * @param context
+     * @param pxValue
+     * @return
+     */
+    public static int px2dip(Context context, float pxValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+
 }

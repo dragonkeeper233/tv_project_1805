@@ -7,6 +7,20 @@
     <color name="default_background">#3d3d3d</color>
 
 
-    <color name="bg_color_blue">#245ead</color>
+    <color name="bg_color_blue">#235fac</color>
+    <color name="home_title_color_blue">#1b58a4</color>
+    <color name="home_title_text_blue">#84ade0</color>
+    <color name="home_btn_color_blue">#175098</color>
+    <color name="home_title_divide_blue">#4573ad</color>
+    <color name="chat_btn_blue">#2d7dc1</color>
+
     <color name="white">#ffffff</color>
+    <color name="yellow">#ffff00</color>
+    <color name="chat_xy_text_color">#689fd0</color>
+    <color name="chat_line_red_color">#f26c6c</color>
+    <color name="chat_line_yellow_color">#e3c267</color>
+    <color name="chat_line_blue_color">#689fd0</color>
+    <color name="chat_line_green_color">#5bd8a8</color>
+    <color name="sever_round_color">#8ba8cc</color>
+    <color name="sever_content_line_color">#4573ad</color>
 </resources>

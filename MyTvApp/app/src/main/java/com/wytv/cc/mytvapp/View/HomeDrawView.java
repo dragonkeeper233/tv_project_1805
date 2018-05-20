@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class HomeDrawView extends BaseView implements IBaseView, View.OnClickListener {
     private int timeCount = 24;
-    private TextView time24Btn, time48Btn, time72Btn;
+    private Button time24Btn, time48Btn, time72Btn;
     private LineChart mChart;
 
 
@@ -49,11 +50,11 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
     @Override
     public void init(Context context) {
         View.inflate(context, R.layout.layout_home_draw, this);
-        time24Btn = (TextView) findViewById(R.id.title_monitor_time_24);
+        time24Btn = (Button) findViewById(R.id.title_monitor_time_24);
         time24Btn.setOnClickListener(this);
-        time48Btn = (TextView) findViewById(R.id.title_monitor_time_48);
+        time48Btn = (Button) findViewById(R.id.title_monitor_time_48);
         time48Btn.setOnClickListener(this);
-        time72Btn = (TextView) findViewById(R.id.title_monitor_time_72);
+        time72Btn = (Button) findViewById(R.id.title_monitor_time_72);
         time72Btn.setOnClickListener(this);
         mChart = (LineChart) findViewById(R.id.chart);
         initChart(mChart);
@@ -100,14 +101,23 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
         switch (v.getId()) {
             case R.id.title_monitor_time_24:
                 timeCount = 24;
+                time24Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_selector));
+                time48Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+                time72Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
                 activity.refresh();
                 break;
             case R.id.title_monitor_time_48:
                 timeCount = 48;
+                time48Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_selector));
+                time24Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+                time72Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
                 activity.refresh();
                 break;
             case R.id.title_monitor_time_72:
                 timeCount = 72;
+                time72Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_selector));
+                time48Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+                time24Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
                 activity.refresh();
                 break;
         }
@@ -127,7 +137,10 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
             entries4.add(new Entry(i, screenMonitorObjects.get(i).getResources_add_count()));
         }
         mChart.clear();
-        LineData data = new LineData(setChartData(entries1), setChartData(entries2), setChartData(entries3), setChartData(entries4));
+        LineData data = new LineData(setChartData(entries1, getResources().getColor(R.color.chat_line_red_color)),
+                setChartData(entries2, getResources().getColor(R.color.chat_line_blue_color)),
+                setChartData(entries3, getResources().getColor(R.color.chat_line_green_color)),
+                setChartData(entries4, getResources().getColor(R.color.chat_line_yellow_color)));
         mChart.setData(data);
         mChart.invalidate();
     }
@@ -143,6 +156,7 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
         chart.getDescription().setEnabled(false);
         // 没有数据的时候，显示“暂无数据”
         chart.setNoDataText("暂无数据");
+        chart.setNoDataTextColor(Color.WHITE);
         // 不显示表格颜色
         chart.setDrawGridBackground(false);
         // 不可以缩放
@@ -156,25 +170,30 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
 //        chart.setExtraLeftOffset(-15);
 
         XAxis xAxis = chart.getXAxis();
+        xAxis.setDrawGridLines(false);
         // 设置x轴数据的位置
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.WHITE);
+        xAxis.setGridColor(Color.TRANSPARENT);
+        xAxis.setTextColor(getResources().getColor(R.color.chat_xy_text_color));
         xAxis.setTextSize(12);
-        xAxis.setAxisLineColor(Color.WHITE);
+        xAxis.setDrawGridLines(true);
+        xAxis.setAxisLineColor(getResources().getColor(R.color.chat_xy_text_color));
         // 设置x轴数据偏移量
-        xAxis.setYOffset(-12);
+       xAxis.setYOffset(5);
 
         YAxis yAxis = chart.getAxisLeft();
         // 不显示y轴
-        yAxis.setDrawAxisLine(false);
+//        yAxis.setDrawAxisLine(false);
         // 设置y轴数据的位置
         yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         // 不从y轴发出横向直线
-        yAxis.setDrawGridLines(false);
-        yAxis.setTextColor(Color.WHITE);
+        yAxis.setDrawGridLines(true);
+        yAxis.setTextColor(getResources().getColor(R.color.chat_xy_text_color));
+        yAxis.setAxisLineColor(getResources().getColor(R.color.chat_xy_text_color));
+        yAxis.setGridColor(getResources().getColor(R.color.chat_xy_text_color));
         yAxis.setTextSize(12);
         // 设置y轴数据偏移量
-        yAxis.setXOffset(30);
+        yAxis.setXOffset(5);
         yAxis.setYOffset(-3);
         yAxis.setAxisMinimum(0);
 
@@ -194,12 +213,12 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
      *
      * @param values 数据
      */
-    public LineDataSet setChartData(List<Entry> values) {
+    public LineDataSet setChartData(List<Entry> values, int color) {
         LineDataSet lineDataSet;
 
         lineDataSet = new LineDataSet(values, "");
         // 设置曲线颜色
-        lineDataSet.setColor(Color.parseColor("#FFFFFF"));
+        lineDataSet.setColor(color);
         // 设置平滑曲线
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         // 不显示坐标点的小圆点

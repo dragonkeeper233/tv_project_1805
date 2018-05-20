@@ -8,6 +8,7 @@ import com.dyhdyh.support.countdowntimer.CountDownTimerSupport;
 import com.dyhdyh.support.countdowntimer.OnCountDownTimerListener;
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.CommonUtils;
+import com.wytv.cc.mytvapp.View.HomeDatabaseView;
 import com.wytv.cc.mytvapp.View.HomeDrawView;
 import com.wytv.cc.mytvapp.View.HomeServerView;
 import com.wytv.cc.mytvapp.View.HometitleView;
@@ -19,7 +20,8 @@ public class MyMainActivity extends ComonActivity implements OnCountDownTimerLis
     private HometitleView hometitleView;
     private HomeServerView homeServerView;
     private HomeDrawView homeDrawView;
-    private static final int VIEW_COUNT = 3;
+    private HomeDatabaseView homeDatabaseView;
+    private static final int VIEW_COUNT = 4;
 
     private CountDownTimerSupport mTimer;
 
@@ -34,11 +36,13 @@ public class MyMainActivity extends ComonActivity implements OnCountDownTimerLis
         super.onCreate(savedInstanceState);
 
         hometitleView = (HometitleView) findViewById(R.id.screen_title);
-        hometitleView.activity=this;
+        hometitleView.activity = this;
         homeServerView = (HomeServerView) findViewById(R.id.screen_sever);
         homeServerView.activity = this;
         homeDrawView = (HomeDrawView) findViewById(R.id.screen_monitor);
         homeDrawView.activity = this;
+        homeDatabaseView = (HomeDatabaseView) findViewById(R.id.screen_database);
+        homeDatabaseView.activity = this;
         mTimer = new CountDownTimerSupport(60000, 1000);
         mTimer.setOnCountDownTimerListener(this);
         refresh();
@@ -55,10 +59,12 @@ public class MyMainActivity extends ComonActivity implements OnCountDownTimerLis
             homeServerView.refresh(currentTime);
         if (homeDrawView != null)
             homeDrawView.refresh(currentTime);
+        if (homeDatabaseView != null)
+            homeDatabaseView.refresh(currentTime);
     }
 
     public void alreadyRefresh(View view, long loadTime) {
-        if (remberCount(view,loadTime)){
+        if (remberCount(view, loadTime)) {
             mTimer.reset();
             mTimer.start();
         }
@@ -80,15 +86,15 @@ public class MyMainActivity extends ComonActivity implements OnCountDownTimerLis
 
     private synchronized boolean remberCount(View view, long loadTime) {
         RemberCountObj obj = remberCountObjHashMap.get(loadTime + "");
-        if (obj ==null) {
+        if (obj == null) {
             obj = new RemberCountObj();
             obj.time = loadTime;
             obj.count++;
             remberCountObjHashMap.put(loadTime + "", obj);
-        }else{
+        } else {
             obj.count++;
         }
-        if (obj.count>=VIEW_COUNT){
+        if (obj.count >= VIEW_COUNT) {
             remberCountObjHashMap.remove(loadTime + "");
             return true;
         }
@@ -100,5 +106,10 @@ public class MyMainActivity extends ComonActivity implements OnCountDownTimerLis
         public int count;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mTimer != null)
+            mTimer.stop();
+    }
 }

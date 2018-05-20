@@ -10,4 +10,5 @@ public class UrlUtils {
     public static String SCREEN_BASE = "/screen/base";
     public static String SCREEN_SERVER = "/screen/server";
     public static String SCREEN_MONITOR= "/screen/monitor";
+    public static String SCREEN_DATABSE= "/screen/database";
 }

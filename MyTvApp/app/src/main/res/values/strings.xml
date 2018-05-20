@@ -24,8 +24,12 @@
     <string name="toast_error_screen_base">基础数据刷新失败</string>
     <string name="toast_error_screen_sever">实时服务器信息刷新失败</string>
     <string name="toast_error_screen_monitor">实时监控信息刷新失败</string>
+    <string name="toast_error_screen_database">数据库信息刷新失败</string>
     <string name="title_screen_sever">实\n时\n服\n务\n器\n信\n息</string>
     <string name="content_last_time_str">最后查询时间</string>
     <string name="title_screen_monitor">实\n时\n数\n据\n监\n控</string>
-
+    <string name="title_screen_database">数\n据\n库</string>
+    <string name="add">新增</string>
+    <string name="update">更新</string>
+    <string name="delete">删除</string>
 </resources>

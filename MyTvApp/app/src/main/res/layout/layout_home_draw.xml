@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/title_monitor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
         android:gravity="center"
         android:text="@string/title_screen_monitor"
         android:textColor="@color/white"
-        android:textSize="14dp" />
+        android:textSize="18dp" />
 
     <LinearLayout
         android:id="@+id/select_ly"
@@ -23,32 +23,42 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
+        <Button
             android:id="@+id/title_monitor_time_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+
+            android:layout_marginRight="10dp"
+            android:background="@drawable/chat_btn_selector"
             android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="24小时"
             android:textColor="@color/white"
             android:textSize="12dp" />
 
-        <TextView
+        <Button
             android:id="@+id/title_monitor_time_48"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/chat_btn_noselect_selector"
             android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="48小时"
             android:textColor="@color/white"
             android:textSize="12dp" />
 
-        <TextView
+        <Button
             android:id="@+id/title_monitor_time_72"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/chat_btn_noselect_selector"
             android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="72小时"
             android:textColor="@color/white"
             android:textSize="12dp" />
@@ -57,7 +67,10 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/select_ly"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/title_monitor" />
 </RelativeLayout>

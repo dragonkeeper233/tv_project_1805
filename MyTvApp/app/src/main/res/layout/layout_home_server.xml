@@ -10,20 +10,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:gravity="center"
         android:text="@string/title_screen_sever"
         android:textColor="@color/white"
-        android:textSize="14dp" />
+        android:textSize="18dp" />
 
     <LinearLayout
         android:id="@+id/last_time_ly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@+id/title_server"
+        android:background="@drawable/sever_time_bg"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -40,7 +41,7 @@
             android:layout_width="100dp"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="@color/white" />
+            android:background="@color/sever_round_color" />
 
         <TextView
             android:id="@+id/last_time_content"
@@ -77,8 +78,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/sever_content_bg"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -92,9 +95,9 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_marginTop="5dp"
-                    android:background="@color/white" />
+                    android:background="@color/sever_content_line_color" />
 
                 <TextView
                     android:id="@+id/server_cup_tv"
@@ -107,8 +110,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/sever_content_bg"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -122,9 +127,9 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_marginTop="5dp"
-                    android:background="@color/white" />
+                    android:background="@color/sever_content_line_color" />
 
                 <TextView
                     android:id="@+id/server_tingdun_tv"
@@ -145,8 +150,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/sever_content_bg"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -160,9 +167,9 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_marginTop="5dp"
-                    android:background="@color/white" />
+                    android:background="@color/sever_content_line_color" />
 
                 <TextView
                     android:id="@+id/server_cipan_tv"
@@ -175,8 +182,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/sever_content_bg"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -190,9 +199,9 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_marginTop="5dp"
-                    android:background="@color/white" />
+                    android:background="@color/sever_content_line_color" />
 
                 <TextView
                     android:id="@+id/server_neiwang_tv"
@@ -213,8 +222,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/sever_content_bg"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -228,9 +239,9 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_marginTop="5dp"
-                    android:background="@color/white" />
+                    android:background="@color/sever_content_line_color" />
 
                 <TextView
                     android:id="@+id/server_neicun_tv"
@@ -243,8 +254,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/sever_content_bg"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -258,9 +271,9 @@
 
                 <ImageView
                     android:layout_width="50dp"
-                    android:layout_height="1dp"
+                    android:layout_height="1px"
                     android:layout_marginTop="5dp"
-                    android:background="@color/white" />
+                    android:background="@color/sever_content_line_color" />
 
                 <TextView
                     android:id="@+id/server_waiwang_tv"

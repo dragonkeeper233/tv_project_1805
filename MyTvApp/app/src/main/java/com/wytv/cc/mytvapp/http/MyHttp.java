@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -17,7 +18,9 @@ import okhttp3.Response;
 
 public class MyHttp {
     public static void get(String url, String value, MyHttpCallback callback) {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .build();
         //构造Request对象
         //采用建造者模式，链式调用指明进行Get请求,传入Get的请求地址
 //        ?_t=1526391481&token=12dL5F9tv0qww
@@ -64,7 +67,9 @@ public class MyHttp {
 
 
     public static void post(String url, final MyHttpCallback callback) {
-        OkHttpClient client = new OkHttpClient();//创建OkHttpClient对象。
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .build();//创建OkHttpClient对象。
         FormBody.Builder formBody = new FormBody.Builder();//创建表单请求体
         formBody.add("_t", System.currentTimeMillis() + "");//传递键值对参数
         formBody.add("token", UrlUtils.TOKEN);//传递键值对参数
