@@ -46,7 +46,8 @@ public class MYSharePreference  {
         return preferences.getString(BASE_URL_SP, "");
     }
 
-    private static final String TOKEN_SP  ="BASE_URL_SP";
+    private static final String TOKEN_SP  ="TOKEN_SP";
+
     public void setToken(String BaseUrl) {
         preferences.edit().putString(TOKEN_SP, BaseUrl).commit();
     }

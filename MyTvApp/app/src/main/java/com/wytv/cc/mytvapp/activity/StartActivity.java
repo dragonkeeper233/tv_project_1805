@@ -1,9 +1,10 @@
 package com.wytv.cc.mytvapp.activity;
 
 import android.content.Intent;
-
-import com.wytv.cc.mytvapp.MainActivity;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.Utils.CommonUtils;
 
 public class StartActivity extends ComonActivity {
 
@@ -12,10 +13,17 @@ public class StartActivity extends ComonActivity {
         return R.layout.activity_start;
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        gotoHome();
+    }
+
     private void gotoHome(){
         Intent intent = new Intent();
-        intent.setClass(this, MainActivity.class);
+        intent.setClass(this, MyMainActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

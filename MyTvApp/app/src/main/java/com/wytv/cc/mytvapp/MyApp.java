@@ -3,6 +3,7 @@ package com.wytv.cc.mytvapp;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.wytv.cc.mytvapp.Utils.CommonUtils;
 import com.wytv.cc.mytvapp.Utils.MYSharePreference;
 import com.wytv.cc.mytvapp.http.UrlUtils;
 
@@ -16,6 +17,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //desiredDensity : ldpi = 0.75 (120dpi) , mdpi = 1 (160dpi), hdpi = 1.5 (240dpi), xhdpi = 2.0 (320dpi)
         myApp = this;
         initUrl();
         initToken();

@@ -7,6 +7,7 @@ public class UrlUtils {
     public  static String BASE_URL;
     public  static String TOKEN ;
 
-    public static String SCREEN_BASE =BASE_URL+ "/screen/base";
-    public static String SCREEN_SERVER =BASE_URL+ "/screen/server";
+    public static String SCREEN_BASE = "/screen/base";
+    public static String SCREEN_SERVER = "/screen/server";
+    public static String SCREEN_MONITOR= "/screen/monitor";
 }

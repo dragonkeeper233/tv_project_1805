@@ -1,5 +1,7 @@
 package com.wytv.cc.mytvapp.Object;
 
+import com.google.gson.Gson;
+
 public class ScreenBaseObject {
 
 //    dir_num：文件夹数量
@@ -63,5 +65,11 @@ public class ScreenBaseObject {
 
     public void setImage_num(int image_num) {
         this.image_num = image_num;
+    }
+
+    public static ScreenBaseObject getObj(String jsStr){
+        Gson gson = new Gson();
+        ScreenBaseObject result = gson.fromJson(jsStr, ScreenBaseObject.class);
+        return result;
     }
 }
