@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.wytv.cc.mytvapp.Object.DatabaseObject;
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.Utils.CommonUtils;
 import com.wytv.cc.mytvapp.http.MyHttp;
 import com.wytv.cc.mytvapp.http.MyHttpInterfae;
 
@@ -54,6 +55,8 @@ public class HomeDatabaseView extends BaseView implements IBaseView {
                 ArrayList<DatabaseObject> result = DatabaseObject.getObj(reson);
                 if (result != null) {
                     sendSuccessMessage(result, currentTime);
+                } else {
+                    sendFailedMessage("数据解析失败", currentTime);
                 }
             }
         });
@@ -88,13 +91,20 @@ public class HomeDatabaseView extends BaseView implements IBaseView {
             HomeDatabaseItemLy homeDatabaseItemLy = new HomeDatabaseItemLy(getContext());
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             layoutParams.weight = 1;
+            int padding = CommonUtils.dip2px(getContext(), 10);
+            layoutParams.leftMargin = padding;
+            layoutParams.rightMargin = padding;
+            layoutParams.topMargin = padding;
+            layoutParams.bottomMargin = padding;
             rootLy.addView(homeDatabaseItemLy, layoutParams);
+            homeDatabaseItemLy.setBackgroundResource(databaseObject.getIs_warning() == 1 ? R.drawable.danger_danger_bg : R.drawable.danger_nomal_bg);
             homeDatabaseItemLy.time = databaseObject.getDate();
             homeDatabaseItemLy.last = databaseObject.getTimeago();
             final ArrayList<DatabaseObject.Data> data = databaseObject.getData();
             if (data != null && data.size() != 0) {
                 for (int j = 0; j < data.size(); j++) {
-                    homeDatabaseItemLy.addItem(data.get(j));
+                    if (j == 0)
+                        homeDatabaseItemLy.addItem(data.get(j));
                 }
             }
 

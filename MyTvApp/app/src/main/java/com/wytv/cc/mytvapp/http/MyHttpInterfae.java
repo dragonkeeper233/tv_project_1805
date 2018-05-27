@@ -17,4 +17,45 @@ public class MyHttpInterfae {
     public static void getScreenDatabase(MyHttp.MyHttpCallback callback) {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.SCREEN_DATABSE, "", callback);
     }
+
+    public static void getScreenDanger(MyHttp.MyHttpCallback callback) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.SCREEN_DANGER, "", callback);
+    }
+
+    public static void getNewsBase(MyHttp.MyHttpCallback callback) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.NEWS_BASE, "", callback);
+    }
+
+    // limit:数量，默认10
+    public static void getNewsRecent(MyHttp.MyHttpCallback callback, int limit) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.NEWS_RECENT, "&limit=" + limit, callback);
+    }
+
+    // limit:数量，默认50
+    public static void getNewsLists(MyHttp.MyHttpCallback callback, int limit) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.NEWS_LISTS, "&limit=" + limit, callback);
+    }
+
+
+
+    public static void getPhotoBase(MyHttp.MyHttpCallback callback) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.PHOTO_BASE, "", callback);
+    }
+
+    // page:页码，默认1
+    //pageSize：每页显示数量，默认50
+    public static void getPhotoLists(MyHttp.MyHttpCallback callback, int page, int pageSize) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.PHOTO_LISTS, "&page=" + page + "&pageSize=" + pageSize, callback);
+    }
+
+
+    public static void getVideoBase(MyHttp.MyHttpCallback callback) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.VIDEO_BASE, "", callback);
+    }
+
+    // page:页码，默认1
+    //pageSize：每页显示数量，默认50
+    public static void getVideoLists(MyHttp.MyHttpCallback callback, int page, int pageSize) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.VIDEO_LISTS, "&page=" + page + "&pageSize=" + pageSize, callback);
+    }
 }

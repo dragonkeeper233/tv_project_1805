@@ -1,5 +1,6 @@
 package com.wytv.cc.mytvapp.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,23 +13,20 @@ import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.MYSharePreference;
 import com.wytv.cc.mytvapp.http.UrlUtils;
 
-public class TestEditActivity extends ComonActivity implements View.OnClickListener {
+public class TestEditActivity extends Activity implements View.OnClickListener {
    private EditText tokenEt,urlEt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getContentViewID());
+        setContentView(R.layout.activity_edit_test);
         tokenEt = (EditText) findViewById(R.id.token_edt);
         urlEt = (EditText) findViewById(R.id.url_edt);
         findViewById(R.id.ok).setOnClickListener(this);
         urlEt.setText(UrlUtils.BASE_URL);
         tokenEt.setText(UrlUtils.TOKEN);
     }
-    @Override
-    protected int getContentViewID() {
-        return R.layout.activity_edit_test;
-    }
+
 
     @Override
     public void onClick(View v) {

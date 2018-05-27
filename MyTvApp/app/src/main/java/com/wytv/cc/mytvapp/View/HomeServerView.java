@@ -62,6 +62,8 @@ public class HomeServerView extends BaseView implements IBaseView {
                 ScreenSeverObject screenSeverObject = ScreenSeverObject.getObj(reson);
                 if (screenSeverObject != null) {
                     sendSuccessMessage(screenSeverObject, currentTime);
+                } else {
+                    sendFailedMessage("数据解析失败", currentTime);
                 }
             }
         });

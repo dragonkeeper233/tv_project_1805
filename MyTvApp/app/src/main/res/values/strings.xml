@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyTvApp</string>
+    <string name="app_name">听盾</string>
     <string name="browse_title"><![CDATA[Videos by Your Company]]></string>
     <string name="related_movies">Related Videos</string>
     <string name="grid_view">Grid View</string>
@@ -25,11 +25,26 @@
     <string name="toast_error_screen_sever">实时服务器信息刷新失败</string>
     <string name="toast_error_screen_monitor">实时监控信息刷新失败</string>
     <string name="toast_error_screen_database">数据库信息刷新失败</string>
+    <string name="toast_error_screen_danger">文件数据刷新失败</string>
     <string name="title_screen_sever">实\n时\n服\n务\n器\n信\n息</string>
     <string name="content_last_time_str">最后查询时间</string>
     <string name="title_screen_monitor">实\n时\n数\n据\n监\n控</string>
     <string name="title_screen_database">数\n据\n库</string>
+    <string name="title_screen_danger">文\n件</string>
     <string name="add">新增</string>
     <string name="update">更新</string>
     <string name="delete">删除</string>
+    <string name="photo_count">图片总量</string>
+    <string name="video_count">视频总量</string>
+    <string name="today_count">今日数</string>
+    <string name="yesteday_count">昨日数</string>
+    <string name="week_count">本周数</string>
+    <string name="month_count">本月数</string>
+    <string name="home_title">项目信息</string>
+    <string name="photo_title">图片信息</string>
+    <string name="video_title">视频信息</string>
+    <string name="toast_error_photo_base">图片基础数据刷新失败</string>
+    <string name="toast_error_photo_list">图片列表数据刷新失败</string>
+    <string name="toast_error_video_base">视频基础数据刷新失败</string>
+    <string name="toast_error_video_list">视频列表数据刷新失败</string>
 </resources>

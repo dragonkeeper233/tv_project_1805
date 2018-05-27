@@ -23,4 +23,5 @@
     <color name="chat_line_green_color">#5bd8a8</color>
     <color name="sever_round_color">#8ba8cc</color>
     <color name="sever_content_line_color">#4573ad</color>
+    <color name="danger_title_color">#f29c10</color>
 </resources>

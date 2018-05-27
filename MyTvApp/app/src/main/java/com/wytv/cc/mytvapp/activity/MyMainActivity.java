@@ -1,29 +1,29 @@
 package com.wytv.cc.mytvapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 
-import com.dyhdyh.support.countdowntimer.CountDownTimerSupport;
-import com.dyhdyh.support.countdowntimer.OnCountDownTimerListener;
 import com.wytv.cc.mytvapp.R;
-import com.wytv.cc.mytvapp.Utils.CommonUtils;
+
+import com.wytv.cc.mytvapp.View.HomeDangerView;
 import com.wytv.cc.mytvapp.View.HomeDatabaseView;
 import com.wytv.cc.mytvapp.View.HomeDrawView;
 import com.wytv.cc.mytvapp.View.HomeServerView;
 import com.wytv.cc.mytvapp.View.HometitleView;
 
-import java.util.HashMap;
-
-public class MyMainActivity extends ComonActivity implements OnCountDownTimerListener {
+public class MyMainActivity extends ComonActivity {
 
     private HometitleView hometitleView;
     private HomeServerView homeServerView;
     private HomeDrawView homeDrawView;
     private HomeDatabaseView homeDatabaseView;
-    private static final int VIEW_COUNT = 4;
+    private HomeDangerView homeDangerView;
 
-    private CountDownTimerSupport mTimer;
+    @Override
+    protected int getViewCount() {
+        return 5;
+    }
 
 
     @Override
@@ -41,34 +41,31 @@ public class MyMainActivity extends ComonActivity implements OnCountDownTimerLis
         homeServerView.activity = this;
         homeDrawView = (HomeDrawView) findViewById(R.id.screen_monitor);
         homeDrawView.activity = this;
+
+        homeDangerView = (HomeDangerView) findViewById(R.id.screen_danger);
+        homeDangerView.activity = this;
+
         homeDatabaseView = (HomeDatabaseView) findViewById(R.id.screen_database);
         homeDatabaseView.activity = this;
-        mTimer = new CountDownTimerSupport(60000, 1000);
-        mTimer.setOnCountDownTimerListener(this);
+
         refresh();
     }
 
-    private long currentTime;
 
-    public void refresh() {
-        mTimer.stop();
-        currentTime = System.currentTimeMillis();
+    @Override
+    public void refreshByTime(long time) {
         if (hometitleView != null)
-            hometitleView.refresh(currentTime);
+            hometitleView.refresh(time);
         if (homeServerView != null)
-            homeServerView.refresh(currentTime);
+            homeServerView.refresh(time);
         if (homeDrawView != null)
-            homeDrawView.refresh(currentTime);
+            homeDrawView.refresh(time);
+        if (homeDangerView != null)
+            homeDangerView.refresh(time);
         if (homeDatabaseView != null)
-            homeDatabaseView.refresh(currentTime);
+            homeDatabaseView.refresh(time);
     }
 
-    public void alreadyRefresh(View view, long loadTime) {
-        if (remberCount(view, loadTime)) {
-            mTimer.reset();
-            mTimer.start();
-        }
-    }
 
     @Override
     public void onTick(long millisUntilFinished) {
@@ -78,38 +75,16 @@ public class MyMainActivity extends ComonActivity implements OnCountDownTimerLis
     }
 
     @Override
-    public void onFinish() {
-        refresh();
-    }
-
-    private HashMap<String, RemberCountObj> remberCountObjHashMap = new HashMap<String, RemberCountObj>();
-
-    private synchronized boolean remberCount(View view, long loadTime) {
-        RemberCountObj obj = remberCountObjHashMap.get(loadTime + "");
-        if (obj == null) {
-            obj = new RemberCountObj();
-            obj.time = loadTime;
-            obj.count++;
-            remberCountObjHashMap.put(loadTime + "", obj);
-        } else {
-            obj.count++;
-        }
-        if (obj.count >= VIEW_COUNT) {
-            remberCountObjHashMap.remove(loadTime + "");
-            return true;
-        }
-        return false;
-    }
-
-    public class RemberCountObj {
-        public long time;
-        public int count;
+    public void toRight() {
+        Intent intent = new Intent(this, PhotoActivity.class);
+        startActivity(intent);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mTimer != null)
-            mTimer.stop();
+    public void toLeft() {
+        Intent intent = new Intent(this, PhotoActivity.class);
+        startActivity(intent);
     }
+
+
 }

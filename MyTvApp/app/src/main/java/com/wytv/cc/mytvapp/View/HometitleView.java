@@ -4,8 +4,6 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.wytv.cc.mytvapp.Object.ScreenBaseObject;
@@ -13,10 +11,25 @@ import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.http.MyHttp;
 import com.wytv.cc.mytvapp.http.MyHttpInterfae;
 
-public class HometitleView extends BaseView implements IBaseView, View.OnClickListener {
+public class HometitleView extends BasetitleView implements IBaseView {
 
-    private TitleItemView packageTv, packCountTv, txtTv, zhiwenTv;
-    private Button refreshBtn, leftBtn, rightBtn;
+    @Override
+    public int getCount() {
+        return 4;
+    }
+
+    @Override
+    public int[] getTitleDrawable() {
+        return new int[]{R.drawable.title_wenjian, R.drawable.title_wenjianshu,
+                R.drawable.title_19_icon, R.drawable.title_icon_14
+        };
+    }
+
+    @Override
+    public String[] getContentTitle() {
+        return new String[]{getResources().getString(R.string.title_package), getResources().getString(R.string.title_pack_count),
+                getResources().getString(R.string.title_pack_change), getResources().getString(R.string.title_zhiwen)};
+    }
 
     public HometitleView(Context context) {
         super(context);
@@ -35,25 +48,8 @@ public class HometitleView extends BaseView implements IBaseView, View.OnClickLi
 
     @Override
     public void init(Context context) {
-        View.inflate(context, R.layout.layout_home_title, this);
-        packageTv = (TitleItemView) findViewById(R.id.title_package);
-        packageTv.setImage(R.drawable.title_wenjian);
-        packageTv.setTitle(getResources().getString(R.string.title_package));
-        packCountTv = (TitleItemView) findViewById(R.id.title_package_cout);
-        packCountTv.setTitle(getResources().getString(R.string.title_pack_count));
-        packCountTv.setImage(R.drawable.title_wenjianshu);
-        txtTv = (TitleItemView) findViewById(R.id.title_content_cout);
-        txtTv.setTitle(getResources().getString(R.string.title_pack_change));
-        txtTv.setImage(R.drawable.title_19_icon);
-        zhiwenTv = (TitleItemView) findViewById(R.id.title_zhiwen_cout);
-        txtTv.setImage(R.drawable.title_icon_14);
-        zhiwenTv.setTitle(getResources().getString(R.string.title_zhiwen));
-        refreshBtn = (Button) findViewById(R.id.title_refresh_btn);
-        refreshBtn.setOnClickListener(this);
-        leftBtn = (Button) findViewById(R.id.title_left_btn);
-        leftBtn.setOnClickListener(this);
-        rightBtn = (Button) findViewById(R.id.title_right_btn);
-        rightBtn.setOnClickListener(this);
+        super.init(context);
+        titleTv.setText(R.string.home_title);
     }
 
     @Override
@@ -70,14 +66,11 @@ public class HometitleView extends BaseView implements IBaseView, View.OnClickLi
                 ScreenBaseObject result = ScreenBaseObject.getObj(reson);
                 if (result != null) {
                     sendSuccessMessage(result, currentTime);
+                } else {
+                    sendFailedMessage("数据解析失败", currentTime);
                 }
             }
         });
-
-    }
-
-    @Override
-    public void loadData() {
 
     }
 
@@ -90,14 +83,8 @@ public class HometitleView extends BaseView implements IBaseView, View.OnClickLi
         ScreenBaseObject screenBaseObject = (ScreenBaseObject) obj;
         if (screenBaseObject == null)
             return;
-        if (packageTv != null)
-            packageTv.setCount(screenBaseObject.getDir_num() + "");
-        if (packCountTv != null)
-            packCountTv.setCount(screenBaseObject.getFile_num() + "");
-        if (txtTv != null)
-            txtTv.setCount(screenBaseObject.getArticle_num() + "");
-        if (zhiwenTv != null)
-            zhiwenTv.setCount(screenBaseObject.getHash_num() + "");
+        setTitleContent(screenBaseObject.getDir_num() + "", screenBaseObject.getFile_num() + "",
+                screenBaseObject.getArticle_num() + "", screenBaseObject.getHash_num() + "");
         alreadyRefresh(currentTime);
     }
 
@@ -107,13 +94,4 @@ public class HometitleView extends BaseView implements IBaseView, View.OnClickLi
         alreadyRefresh(currentTime);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_refresh_btn:
-                if (activity != null)
-                    activity.refresh();
-                break;
-        }
-    }
 }

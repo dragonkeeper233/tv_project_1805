@@ -1,7 +1,6 @@
 package com.wytv.cc.mytvapp.View;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,10 +8,10 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.wytv.cc.mytvapp.activity.MyMainActivity;
+import com.wytv.cc.mytvapp.activity.ComonActivity;
 
 public abstract class BaseView extends LinearLayout {
-    public MyMainActivity activity;
+    public ComonActivity activity;
 
     public BaseView(Context context) {
         super(context);

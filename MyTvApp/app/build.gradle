@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword 'cctv123'
+            storeFile file('E:/github/tv_project_1805/MyTvApp/sign.jks')
+            storePassword 'cctv123'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.wytv.cc.mytvapp"
@@ -13,12 +21,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:leanback-v17:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.github.bumptech.glide:glide:3.8.0'
@@ -27,4 +40,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'com.dyhdyh.support:count-down-timer:1.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

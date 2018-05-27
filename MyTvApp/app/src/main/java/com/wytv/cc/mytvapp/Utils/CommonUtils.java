@@ -4,6 +4,7 @@ import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -62,6 +63,26 @@ public class CommonUtils {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
+    /**
+     * 得到屏幕宽度
+     *
+     * @return
+     */
+    @SuppressWarnings("deprecation")
+    public static int getScreenWidth(Context context) {
+        return ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getWidth();
+    }
 
+    /**
+     * 得到屏幕高度
+     *
+     * @return
+     */
+    @SuppressWarnings("deprecation")
+    public static int getScreenHeight(Context context) {
+        return ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getHeight();
+    }
 
 }

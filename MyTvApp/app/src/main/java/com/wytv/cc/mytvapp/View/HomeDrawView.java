@@ -74,6 +74,8 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
                 ArrayList<ScreenMonitorObject> screenMonitorObjects = ScreenMonitorObject.getObj(reson);
                 if (screenMonitorObjects != null) {
                     sendSuccessMessage(screenMonitorObjects, currentTime);
+                } else {
+                    sendFailedMessage("数据解析失败", currentTime);
                 }
             }
         }, timeCount);
@@ -179,7 +181,7 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
         xAxis.setDrawGridLines(true);
         xAxis.setAxisLineColor(getResources().getColor(R.color.chat_xy_text_color));
         // 设置x轴数据偏移量
-       xAxis.setYOffset(5);
+        xAxis.setYOffset(5);
 
         YAxis yAxis = chart.getAxisLeft();
         // 不显示y轴

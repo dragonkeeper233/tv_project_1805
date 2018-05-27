@@ -11,4 +11,19 @@ public class UrlUtils {
     public static String SCREEN_SERVER = "/screen/server";
     public static String SCREEN_MONITOR= "/screen/monitor";
     public static String SCREEN_DATABSE= "/screen/database";
+    public static String SCREEN_DANGER= "/screen/danger";
+
+
+    public static String NEWS_BASE= "/news/base";
+    public static String NEWS_RECENT= "news/recent";
+    public static String NEWS_LISTS= "news/lists";
+
+    public static String PHOTO_BASE= "/photo/base";
+    public static String PHOTO_LISTS= "/photo/lists";
+
+    public static String VIDEO_BASE= "/video/base";
+    public static String VIDEO_LISTS= "/video/lists";
+
+
+
 }

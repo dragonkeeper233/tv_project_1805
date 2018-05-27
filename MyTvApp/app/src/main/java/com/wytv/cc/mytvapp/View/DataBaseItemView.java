@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wytv.cc.mytvapp.Object.DatabaseObject;
+import com.wytv.cc.mytvapp.Object.DengerObject;
 import com.wytv.cc.mytvapp.R;
 
 public class DataBaseItemView {
@@ -23,12 +24,19 @@ public class DataBaseItemView {
         return view;
     }
 
-    public void setUI(DatabaseObject.Data data, String time, String last) {
+    public void setUI(Object data, String time, String last) {
         if (data == null)
             return;
-        setTitle(data.getTable_name());
-        setContent(data.getInsert(), data.getUpdate(), data.getDelete());
         setTime(time, last);
+        if (data instanceof DatabaseObject.Data) {
+            DatabaseObject.Data dbData = (DatabaseObject.Data) data;
+            setTitle(dbData.getTable_name());
+            setContent(dbData.getInsert(), dbData.getUpdate(), dbData.getDelete());
+        } else if (data instanceof DengerObject.DangerData) {
+            DengerObject.DangerData dangerData = (DengerObject.DangerData) data;
+            setTitle(dangerData.getName());
+            setContent(dangerData.getAdd() + "", dangerData.getUpdate() + "", dangerData.getDelete() + "");
+        }
     }
 
     public void setTitle(String str) {
@@ -43,9 +51,9 @@ public class DataBaseItemView {
             if (!TextUtils.isEmpty(add))
                 result = " " + context.getResources().getString(R.string.add) + add;
             if (!TextUtils.isEmpty(change))
-                result = result + context.getResources().getString(R.string.update) + change;
+                result = result + " " + context.getResources().getString(R.string.update) + change;
             if (!TextUtils.isEmpty(delete))
-                result = result + context.getResources().getString(R.string.delete) + delete;
+                result = result + " " + context.getResources().getString(R.string.delete) + delete;
             contentTv.setText(result);
         }
     }

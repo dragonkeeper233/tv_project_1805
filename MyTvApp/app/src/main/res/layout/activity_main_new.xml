@@ -40,8 +40,21 @@
 
     </LinearLayout>
 
+    <com.wytv.cc.mytvapp.View.HomeDangerView
+        android:id="@+id/screen_danger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/danger_content_bg" />
+
     <com.wytv.cc.mytvapp.View.HomeDatabaseView
         android:id="@+id/screen_database"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/database_content_bg" />
 </LinearLayout>
