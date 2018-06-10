@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color_blue"
+    android:orientation="vertical">
+
+    <com.wytv.cc.mytvapp.View.NewsTitleView
+        android:id="@+id/news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/home_btn_color_blue"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp">
+
+        <com.wytv.cc.mytvapp.View.NewsBanderView
+            android:id="@+id/news_recent_ly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.wytv.cc.mytvapp.View.NewsContentView
+            android:id="@+id/news_content_ly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|left"
+        android:lines="1"
+        android:textColor="@color/white"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/date_divide"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/news_content_line_color" />
+
+    <RelativeLayout
+        android:id="@+id/content_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/title_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:maxLength="2"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/title_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toLeftOf="@+id/title_date"
+            android:layout_toRightOf="@+id/title_index"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/title_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="11dp" />
+    </RelativeLayout>
+
+</LinearLayout>

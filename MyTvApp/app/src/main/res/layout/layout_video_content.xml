@@ -6,15 +6,24 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/video_left"
+
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:padding="10dp"
-        android:scaleType="centerCrop" />
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1">
+
+        <com.wytv.cc.mytvapp.widget.media.IjkVideoView
+            android:id="@+id/video_left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableLayout android:background="@color/white"
+            android:id="@+id/video_start"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/video_rv"

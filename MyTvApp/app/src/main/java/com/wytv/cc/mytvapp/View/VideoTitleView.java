@@ -23,7 +23,9 @@ public class VideoTitleView extends BasetitleView implements IBaseView {
 
     @Override
     public int[] getTitleDrawable() {
-        return null;
+        return new int[]{R.drawable.title_19_icon, R.drawable.title_19_icon,
+                R.drawable.title_19_icon, R.drawable.title_19_icon, R.drawable.title_19_icon
+        };
     }
 
     @Override

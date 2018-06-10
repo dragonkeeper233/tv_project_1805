@@ -11,8 +11,8 @@
         android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -34,6 +34,7 @@
         </activity>
         <activity
             android:name=".activity.MyMainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
@@ -41,9 +42,15 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.PhotoActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.VideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.NewsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity android:name=".DetailsActivity" />
         <activity android:name=".PlaybackActivity" />

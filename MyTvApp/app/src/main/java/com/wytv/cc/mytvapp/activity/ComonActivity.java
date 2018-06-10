@@ -38,7 +38,7 @@ public abstract class ComonActivity extends FragmentActivity implements OnCountD
 
     public void refresh() {
         mTimer.stop();
-        if (!customDialog.isShowing())
+        if (!customDialog.isShowing() && !isFinishing())
             customDialog.show();
         currentTime = System.currentTimeMillis();
         refreshByTime(currentTime);

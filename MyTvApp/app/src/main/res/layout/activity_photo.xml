@@ -15,14 +15,19 @@
         android:id="@+id/photo_time_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginRight="20dp"
         android:gravity="center_vertical|right"
         android:textColor="@color/white" />
 
     <com.wytv.cc.mytvapp.View.PhotoContentView
+        android:background="@color/home_btn_color_blue"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/photo_content_ly"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+      />
 
 
 </LinearLayout>

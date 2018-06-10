@@ -1,7 +1,9 @@
 package com.wytv.cc.mytvapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.wytv.cc.mytvapp.R;
@@ -20,13 +22,34 @@ public class VideoActivity extends ComonActivity {
         videoTitleView.activity = this;
         lastTiemTv = (TextView) findViewById(R.id.video_time_tv);
         videoContentView = (VideoContentView) findViewById(R.id.video_content_ly);
-        videoContentView.activity = this;
+        videoContentView.setActivity(this);
         refresh();
     }
 
     @Override
     protected int getContentViewID() {
         return R.layout.activity_video;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (videoContentView != null)
+            videoContentView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (videoContentView != null)
+            videoContentView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (videoContentView != null)
+            videoContentView.onStop();
     }
 
     @Override
@@ -49,16 +72,31 @@ public class VideoActivity extends ComonActivity {
 
     @Override
     public void toRight() {
-
+        Intent intent = new Intent(this, MyMainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
     @Override
     public void toLeft() {
-
+        Intent intent = new Intent(this, PhotoActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
     public void setPhotoTimeTvText(String time) {
         if (lastTiemTv != null)
             lastTiemTv.setText(time);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            toLeft();
+            return false;
+        }else {
+            return super.onKeyDown(keyCode, event);
+        }
+
     }
 }

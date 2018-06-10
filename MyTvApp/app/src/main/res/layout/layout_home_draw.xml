@@ -68,9 +68,72 @@
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_ly"
         android:layout_below="@+id/select_ly"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/title_monitor" />
+
+    <LinearLayout
+        android:id="@+id/bottom_ly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="1dp"
+            android:background="@color/chat_line_red_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="文件警告"
+            android:textColor="@color/white"
+            android:textSize="11dp" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="1dp"
+            android:background="@color/chat_line_yellow_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="资源新增"
+            android:textColor="@color/white"
+            android:textSize="11dp" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="1dp"
+            android:background="@color/chat_line_green_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="数据库告警"
+            android:textColor="@color/white"
+            android:textSize="11dp" />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="1dp"
+            android:background="@color/chat_line_blue_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数据库新增"
+            android:textColor="@color/white"
+            android:textSize="11dp" />
+    </LinearLayout>
 </RelativeLayout>

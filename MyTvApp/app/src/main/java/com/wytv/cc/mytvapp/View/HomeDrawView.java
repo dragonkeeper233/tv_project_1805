@@ -102,6 +102,8 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.title_monitor_time_24:
+                if (timeCount == 24)
+                    return;
                 timeCount = 24;
                 time24Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_selector));
                 time48Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
@@ -109,6 +111,8 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
                 activity.refresh();
                 break;
             case R.id.title_monitor_time_48:
+                if (timeCount == 48)
+                    return;
                 timeCount = 48;
                 time48Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_selector));
                 time24Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
@@ -116,6 +120,8 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
                 activity.refresh();
                 break;
             case R.id.title_monitor_time_72:
+                if (timeCount == 72)
+                    return;
                 timeCount = 72;
                 time72Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_selector));
                 time48Btn.setBackground(getResources().getDrawable(R.drawable.chat_btn_noselect_selector));

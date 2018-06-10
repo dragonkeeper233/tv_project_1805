@@ -22,6 +22,10 @@ public class MyHttpInterfae {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.SCREEN_DANGER, "", callback);
     }
 
+    public static void getScreenReport(MyHttp.MyHttpCallback callback, String type) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.SCREEN_REPORT, "&type=" + type, callback);
+    }
+
     public static void getNewsBase(MyHttp.MyHttpCallback callback) {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.NEWS_BASE, "", callback);
     }
@@ -35,7 +39,6 @@ public class MyHttpInterfae {
     public static void getNewsLists(MyHttp.MyHttpCallback callback, int limit) {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.NEWS_LISTS, "&limit=" + limit, callback);
     }
-
 
 
     public static void getPhotoBase(MyHttp.MyHttpCallback callback) {

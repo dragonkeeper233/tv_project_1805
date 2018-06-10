@@ -9,8 +9,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -21,20 +24,18 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.wytv.cc.mytvapp.Object.PhotoObject;
 import com.wytv.cc.mytvapp.Object.VideoObject;
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.activity.ComonActivity;
 import com.wytv.cc.mytvapp.http.MyHttp;
 import com.wytv.cc.mytvapp.http.MyHttpInterfae;
+import com.wytv.cc.mytvapp.widget.media.IjkVideoView;
 
 import java.util.ArrayList;
 
-public class VideoContentView extends BaseView implements IBaseView {
-    private ImageView leftImgv;
+public class VideoContentView extends BaseView implements IBaseView,PlayerManager.PlayerStateListener {
+    private IjkVideoView ijkVideoView;
     private RecyclerView recyclerView;
-    DisplayImageOptions options = new DisplayImageOptions.Builder()
-            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-            .resetViewBeforeLoading(true).cacheOnDisk(true).cacheInMemory(true)
-            .imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
-            .build();
+    private PlayerManager player;
+    private TableLayout video_start;
 
 
     public VideoContentView(Context context) {
@@ -55,12 +56,18 @@ public class VideoContentView extends BaseView implements IBaseView {
     @Override
     public void init(Context context) {
         View.inflate(context, R.layout.layout_video_content, this);
-        leftImgv = (ImageView) findViewById(R.id.video_left);
+        ijkVideoView = (IjkVideoView) findViewById(R.id.video_left);
         recyclerView = (RecyclerView) findViewById(R.id.video_rv);
+        video_start = (TableLayout) findViewById(R.id.video_start);
+        ijkVideoView.setHudView(video_start);
         GridLayoutManager mgr = new GridLayoutManager(context, 3);
         recyclerView.setLayoutManager(mgr);
+    }
 
-
+    @Override
+    public void setActivity(ComonActivity activity) {
+        super.setActivity(activity);
+        initPlayer();
     }
 
     @Override
@@ -95,27 +102,8 @@ public class VideoContentView extends BaseView implements IBaseView {
         ArrayList<VideoObject> videoObjects = (ArrayList<VideoObject>) obj;
         if (videoObjects != null && videoObjects.size() > 0) {
             recyclerView.setAdapter(new VideoItemAdapter(videoObjects, activity));
-            ImageLoader.getInstance().loadImage("", options, new ImageLoadingListener() {
-                @Override
-                public void onLoadingStarted(String imageUri, View view) {
-                    leftImgv.setImageDrawable(new ColorDrawable(Color.WHITE));
-                }
-
-                @Override
-                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                    leftImgv.setImageDrawable(new ColorDrawable(Color.WHITE));
-                }
-
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    leftImgv.setImageBitmap(loadedImage);
-                }
-
-                @Override
-                public void onLoadingCancelled(String imageUri, View view) {
-                    leftImgv.setImageDrawable(new ColorDrawable(Color.WHITE));
-                }
-            });
+            ijkVideoView.setVideoPath(videoObjects.get(0).getUrl());
+            ijkVideoView.start();
         }
         alreadyRefresh(currentTime);
     }
@@ -126,5 +114,50 @@ public class VideoContentView extends BaseView implements IBaseView {
         alreadyRefresh(currentTime);
     }
 
+    private void initPlayer() {
+        player = new PlayerManager(activity,ijkVideoView);
+        player.setFullScreenOnly(true);
+//        player.setScaleType(PlayerManager.SCALETYPE_FILLPARENT);
+        player.playInFullScreen(true);
+        player.setPlayerStateListener(this);
+//        player.play(url1);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (player.gestureDetector.onTouchEvent(event))
+            return true;
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onComplete() {
+    }
+
+    @Override
+    public void onError() {
+    }
+
+    @Override
+    public void onLoading() {
+    }
+
+    @Override
+    public void onPlay() {
+    }
+
+    public void  onResume(){
+        if (ijkVideoView!=null)
+            ijkVideoView.resume();
+    }
+
+    public void onPause(){
+        if (ijkVideoView!=null)
+            ijkVideoView.pause();
+    }
+    public void onStop(){
+        if (ijkVideoView!=null)
+            ijkVideoView.stopPlayback();
+    }
 
 }

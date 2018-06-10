@@ -24,4 +24,9 @@
     <color name="sever_round_color">#8ba8cc</color>
     <color name="sever_content_line_color">#4573ad</color>
     <color name="danger_title_color">#f29c10</color>
+    <color name="report_title_color">#2561ad</color>
+    <color name="news_banner_blue">#0b4187</color>
+    <color name="news_content_yellow">#f39c10</color>
+    <color name="news_content_red">#f26c6c</color>
+    <color name="news_content_line_color">#4573ad</color>
 </resources>

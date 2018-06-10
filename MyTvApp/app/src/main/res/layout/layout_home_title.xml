@@ -31,83 +31,90 @@
         android:textColor="@color/white"
         android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/title_text"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/home_title_bg"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="项目信息"
-        android:textColor="@color/white"
-        android:textSize="16dp" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <com.wytv.cc.mytvapp.View.TitleItemView
-        android:id="@+id/title_0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_title_btn_bg"
-        android:padding="10dp" />
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_title_bg"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="项目信息"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
 
-    <com.wytv.cc.mytvapp.View.TitleItemView
-        android:id="@+id/title_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_title_btn_bg"
-        android:padding="10dp" />
+        <com.wytv.cc.mytvapp.View.TitleItemView
+            android:id="@+id/title_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_title_btn_bg"
+            android:padding="10dp" />
 
-    <com.wytv.cc.mytvapp.View.TitleItemView
-        android:id="@+id/title_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_title_btn_bg"
-        android:padding="10dp" />
+        <com.wytv.cc.mytvapp.View.TitleItemView
+            android:id="@+id/title_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_title_btn_bg"
+            android:padding="10dp" />
 
-    <com.wytv.cc.mytvapp.View.TitleItemView
-        android:id="@+id/title_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_title_btn_bg"
-        android:padding="10dp" />
+        <com.wytv.cc.mytvapp.View.TitleItemView
+            android:id="@+id/title_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_title_btn_bg"
+            android:padding="10dp" />
 
-    <com.wytv.cc.mytvapp.View.TitleItemView
-        android:id="@+id/title_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_title_btn_bg"
-        android:padding="10dp" />
+        <com.wytv.cc.mytvapp.View.TitleItemView
+            android:id="@+id/title_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_title_btn_bg"
+            android:padding="10dp" />
 
-    <Button
-        android:id="@+id/title_refresh_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/title_btn_selector"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="刷新"
-        android:textColor="@drawable/text_color_selector"
-        android:textSize="16dp" />
+        <com.wytv.cc.mytvapp.View.TitleItemView
+            android:id="@+id/title_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_title_btn_bg"
+            android:padding="10dp" />
 
-    <Button
-        android:id="@+id/title_left_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/title_btn_selector"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="左"
-        android:textColor="@drawable/text_color_selector"
-        android:textSize="16dp" />
+        <Button
+            android:id="@+id/title_refresh_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/title_btn_selector"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="刷新"
+            android:textColor="@drawable/text_color_selector"
+            android:textSize="16dp" />
 
-    <Button
-        android:id="@+id/title_right_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/title_btn_right_selector"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="右"
-        android:textColor="@drawable/text_color_selector"
-        android:textSize="16dp" />
+        <Button
+            android:id="@+id/title_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/title_btn_selector"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="左"
+            android:textColor="@drawable/text_color_selector"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/title_right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/title_btn_right_selector"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="右"
+            android:textColor="@drawable/text_color_selector"
+            android:textSize="16dp" />
+    </LinearLayout>
 </LinearLayout>
