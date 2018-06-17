@@ -103,9 +103,10 @@ public class HomeDatabaseView extends BaseView implements IBaseView {
             final ArrayList<DatabaseObject.Data> data = databaseObject.getData();
             if (data != null && data.size() != 0) {
                 for (int j = 0; j < data.size(); j++) {
-                    if (j == 0)
                         homeDatabaseItemLy.addItem(data.get(j));
                 }
+                if (data.size()>1)
+                    homeDatabaseItemLy.startMyAnimation(0);
             }
 
         }

@@ -10,9 +10,12 @@
         android:id="@+id/photo_left"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:background="@color/white"
+        android:cropToPadding="true"
         android:padding="10dp"
         android:scaleType="centerCrop" />
 

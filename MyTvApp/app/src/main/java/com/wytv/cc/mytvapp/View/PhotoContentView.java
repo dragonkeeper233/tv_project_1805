@@ -58,7 +58,7 @@ public class PhotoContentView extends BaseView implements IBaseView {
         recyclerView = (RecyclerView) findViewById(R.id.photo_rv);
         GridLayoutManager mgr = new GridLayoutManager(context, 5);
         recyclerView.setLayoutManager(mgr);
-
+        recyclerView.setFocusable(true);
 
     }
 

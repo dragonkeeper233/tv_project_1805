@@ -27,6 +27,7 @@
         android:layout_marginLeft="5dp"
         android:layout_weight="1"
         android:gravity="center_vertical|left"
+        android:lines="1"
         android:text="安全运维监控"
         android:textColor="@color/white"
         android:textSize="20dp" />

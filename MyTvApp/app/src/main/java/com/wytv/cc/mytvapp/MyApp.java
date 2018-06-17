@@ -1,5 +1,6 @@
 package com.wytv.cc.mytvapp;
 
+import android.app.Activity;
 import android.app.Application;
 import android.text.TextUtils;
 
@@ -9,9 +10,12 @@ import com.wytv.cc.mytvapp.Utils.CommonUtils;
 import com.wytv.cc.mytvapp.Utils.MYSharePreference;
 import com.wytv.cc.mytvapp.http.UrlUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyApp extends Application {
 
-    public static Application getInstance() {
+    public static MyApp getInstance() {
         return myApp;
     }
 
@@ -41,4 +45,26 @@ public class MyApp extends Application {
             MYSharePreference.getInstance().setToken(UrlUtils.INIT_TOKEN);
         UrlUtils.TOKEN = MYSharePreference.getInstance().getToken();
     }
+
+    private List<Activity> lists = new ArrayList<>();
+
+    public void addActivity(Activity activity) {
+        if (!lists.contains(activity))
+            lists.add(activity);
+    }
+
+    public void removeActivity(Activity activity) {
+        if (lists.contains(activity))
+            lists.remove(activity);
+    }
+
+    public void clearActivity() {
+        if (lists != null) {
+            for (Activity activity : lists) {
+                activity.finish();
+            }
+            lists.clear();
+        }
+    }
+
 }

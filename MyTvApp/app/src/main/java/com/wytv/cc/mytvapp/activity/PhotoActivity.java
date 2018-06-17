@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.Utils.MYSharePreference;
 import com.wytv.cc.mytvapp.View.PhotoContentView;
 import com.wytv.cc.mytvapp.View.PhotoTitleView;
 
@@ -14,6 +15,11 @@ public class PhotoActivity extends ComonActivity {
     private PhotoTitleView photoTitleView;
     private PhotoContentView photoContentView;
     private TextView photoTimeTv;
+
+    @Override
+    protected long getMillisInFutureTime() {
+        return MYSharePreference.getInstance().getPhotoTimeSp();
+    }
 
     @Override
     protected int getContentViewID() {

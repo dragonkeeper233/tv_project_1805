@@ -51,8 +51,8 @@ public class VideoItemAdapter extends RecyclerView.Adapter<VideoItemAdapter.View
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.item_time);
             imageView = (ImageView) itemView.findViewById(R.id.item_image);
-            imageView.getLayoutParams().width = (int) (CommonUtils.getScreenWidth(context) / 3.5);
-            imageView.getLayoutParams().height = (int) (imageView.getLayoutParams().width / (0.6));
+            imageView.getLayoutParams().width = (int) (CommonUtils.getScreenWidth(context) /7);
+            imageView.getLayoutParams().height = (int) (imageView.getLayoutParams().width * (0.6));
         }
     }
 
@@ -71,7 +71,7 @@ public class VideoItemAdapter extends RecyclerView.Adapter<VideoItemAdapter.View
         VideoObject object = videoObjects.get(position);
         if (object != null) {
             holder.textView.setText(object.getDate());
-            ImageLoader.getInstance().loadImage("", options, new ImageLoadingListener() {
+            ImageLoader.getInstance().loadImage(object.getImage(), options, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
                     holder.imageView.setImageDrawable(new ColorDrawable(Color.WHITE));

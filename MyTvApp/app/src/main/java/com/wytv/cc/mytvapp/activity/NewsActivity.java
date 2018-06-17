@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.Utils.MYSharePreference;
 import com.wytv.cc.mytvapp.View.NewsBanderView;
 import com.wytv.cc.mytvapp.View.NewsContentView;
 import com.wytv.cc.mytvapp.View.NewsTitleView;
@@ -14,6 +15,11 @@ public class NewsActivity extends ComonActivity {
     private NewsBanderView banderView;
     private NewsTitleView newsTitleView;
     private NewsContentView newsContentView;
+
+    @Override
+    protected long getMillisInFutureTime() {
+        return MYSharePreference.getInstance().getNewsTimeSp();
+    }
 
     @Override
     protected int getContentViewID() {

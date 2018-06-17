@@ -102,9 +102,10 @@ public class HomeDangerView extends BaseView implements IBaseView {
             final ArrayList<DengerObject.DangerData> items = dengerObject.getData();
             if (items != null && items.size() != 0) {
                 for (int j = 0; j < items.size(); j++) {
-                    if (j == 0)
                         homeDatabaseItemLy.addItem(items.get(j));
                 }
+                if (items.size()>1)
+                    homeDatabaseItemLy.startMyAnimation(0);
             }
 
         }

@@ -51,7 +51,7 @@ public class PhotoItemAdapter extends RecyclerView.Adapter<PhotoItemAdapter.View
             textView = (TextView) itemView.findViewById(R.id.item_time);
             imageView = (ImageView) itemView.findViewById(R.id.item_image);
             imageView.getLayoutParams().width = CommonUtils.getScreenWidth(context) / 12;
-            imageView.getLayoutParams().height = (int) (imageView.getLayoutParams().width / (0.6));
+            imageView.getLayoutParams().height = (int) (imageView.getLayoutParams().width * (0.6));
         }
     }
 

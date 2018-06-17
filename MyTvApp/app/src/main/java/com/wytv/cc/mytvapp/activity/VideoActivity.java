@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.Utils.MYSharePreference;
 import com.wytv.cc.mytvapp.View.VideoContentView;
 import com.wytv.cc.mytvapp.View.VideoTitleView;
 
@@ -14,6 +15,11 @@ public class VideoActivity extends ComonActivity {
     private VideoTitleView videoTitleView;
     private VideoContentView videoContentView;
     private TextView lastTiemTv;
+
+    @Override
+    protected long getMillisInFutureTime() {
+        return MYSharePreference.getInstance().getVideoTimeSp();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

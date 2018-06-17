@@ -12,16 +12,18 @@ import com.wytv.cc.mytvapp.http.LoadProgressDialog;
 
 import java.util.HashMap;
 
-public abstract class ComonActivity extends FragmentActivity implements OnCountDownTimerListener {
+public abstract class ComonActivity extends ControlActivity implements OnCountDownTimerListener {
 
     private CountDownTimerSupport mTimer;
     private LoadProgressDialog customDialog;
+
+    protected abstract long getMillisInFutureTime();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewID());
-        mTimer = new CountDownTimerSupport(60000, 1000);
+        mTimer = new CountDownTimerSupport(getMillisInFutureTime(), 1000);
         mTimer.setOnCountDownTimerListener(this);
         customDialog = new LoadProgressDialog(this,
                 R.style.CustomProgressDialog, R.layout.progress_dialog,

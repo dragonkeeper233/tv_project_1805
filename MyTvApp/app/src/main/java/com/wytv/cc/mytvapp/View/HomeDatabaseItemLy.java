@@ -1,5 +1,8 @@
 package com.wytv.cc.mytvapp.View;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -9,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.CommonUtils;
+import com.wytv.cc.mytvapp.activity.MyMainActivity;
 
 import java.util.ArrayList;
 
@@ -38,13 +42,72 @@ public class HomeDatabaseItemLy extends RelativeLayout {
         DataBaseItemView dataBaseItemView = new DataBaseItemView();
         View view = dataBaseItemView.init(getContext());
         addView(view);
+        if (viewItemList.size() > 0)
+            view.setTranslationY(500);
         viewItemList.add(view);
         dataBaseItemView.setUI(data, time, last);
     }
 
     private void setMyStyle() {
-        int padding = CommonUtils.dip2px(getContext(), 5);
+        int padding = CommonUtils.dip2px(getContext(), 0);
         setPadding(padding, padding, padding, padding);
+    }
+
+    public void startMyAnimation(final int count) {
+        final ArrayList<View> list = viewItemList;
+        if (list == null && list.size() < count + 1)
+            return;
+        final View currrentView = list.get(count);
+        final View nextView = count == list.size() - 1 ? list.get(0) : list.get(count + 1);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator objectAnimatorB = ObjectAnimator.ofFloat(currrentView,
+                "translationY", 0, currrentView.getHeight() == 0 ? -500 : -currrentView.getHeight());
+        objectAnimatorB.setDuration(500);
+        ObjectAnimator objectAnimatorA = ObjectAnimator.ofFloat(nextView,
+                "translationY", nextView.getHeight() == 0 ? 500 : nextView.getHeight(), 0);
+        objectAnimatorA.setDuration(500);
+        objectAnimatorA.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                int nextcount = count == list.size() - 1 ? 0 : count + 1;
+                startMyAnimation(nextcount);
+                currentshow = count;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        AnimatorSet.Builder builder = animatorSet.play(objectAnimatorB).with(objectAnimatorA);
+        for (int j = 0; j < list.size(); j++) {
+            if (!list.get(j).equals(currrentView) && !list.get(j).equals(nextView)) {
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(list.get(j),
+                        "translationY", list.get(j).getHeight() == 0 ? 500 : list.get(j).getHeight(),
+                        list.get(j).getHeight() == 0 ? 500 : list.get(j).getHeight());
+                objectAnimatorA.setDuration(500);
+                builder.with(objectAnimator);
+            }
+        }
+        animatorSet.setStartDelay(5000);
+        animatorSet.start();
+
+    }
+
+    private int currentshow;
+
+    public int getCurrentShow() {
+        return currentshow;
     }
 
 }
