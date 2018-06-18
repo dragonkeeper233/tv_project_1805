@@ -2,10 +2,13 @@ package com.wytv.cc.mytvapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 import com.wytv.cc.mytvapp.MyApp;
+import com.wytv.cc.mytvapp.Object.DialogFileObject;
 import com.wytv.cc.mytvapp.R;
 
 import com.wytv.cc.mytvapp.Utils.MYSharePreference;
@@ -15,6 +18,9 @@ import com.wytv.cc.mytvapp.View.HomeDrawView;
 import com.wytv.cc.mytvapp.View.HomeReportView;
 import com.wytv.cc.mytvapp.View.HomeServerView;
 import com.wytv.cc.mytvapp.View.HometitleView;
+import com.wytv.cc.mytvapp.dialog.HomeDialog;
+import com.wytv.cc.mytvapp.http.MyHttp;
+import com.wytv.cc.mytvapp.http.MyHttpInterfae;
 
 public class MyMainActivity extends ComonActivity {
 
@@ -119,8 +125,47 @@ public class MyMainActivity extends ComonActivity {
 
     }
 
-    public void showMyDialog(String type, String id) {
+
+    public void showMyDialog(String name, String type, String id) {
+        MyHttpInterfae.getDialogFile(new MyHttp.MyHttpCallback() {
+            @Override
+            public void onFailure(int code, String reson) {
+
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                DialogFileObject dialogFileObject = DialogFileObject.getObj(result);
+                if (dialogFileObject != null) {
+                    Message message = Message.obtain();
+                    message.what = DIALOG_MESSAGE_SUCCESS;
+                    message.obj = dialogFileObject;
+                    handler.sendMessage(message);
+                }
+            }
+        }, id, type);
 
     }
+
+    HomeDialog homeDialog;
+
+    private static int DIALOG_MESSAGE_SUCCESS = 3232;
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == DIALOG_MESSAGE_SUCCESS) {
+                DialogFileObject dialogFileObject = (DialogFileObject) msg.obj;
+                if (homeDialog == null) {
+                    homeDialog = new HomeDialog(MyMainActivity.this);
+                }else{
+                    homeDialog.dismiss();
+                }
+                homeDialog.setDialogFileObject(dialogFileObject);
+                homeDialog.show();
+            }
+        }
+    };
 
 }

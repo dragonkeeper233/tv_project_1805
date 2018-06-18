@@ -62,7 +62,7 @@ public class MyHttpInterfae {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.VIDEO_LISTS, "&page=" + page + "&pageSize=" + pageSize, callback);
     }
 
-    public static void getDialogFile(MyHttp.MyHttpCallback callback, int id, String field) {
+    public static void getDialogFile(MyHttp.MyHttpCallback callback, String id, String field) {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_FILE, "&id=" + id + "&field=" + field, callback);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.wytv.cc.mytvapp.Object.DengerObject;
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.CommonUtils;
+import com.wytv.cc.mytvapp.activity.MyMainActivity;
 import com.wytv.cc.mytvapp.http.MyHttp;
 import com.wytv.cc.mytvapp.http.MyHttpInterfae;
 
@@ -98,16 +99,10 @@ public class HomeDangerView extends BaseView implements IBaseView {
             rootLy.addView(homeDatabaseItemLy, layoutParams);
             homeDatabaseItemLy.time = dengerObject.getCreate_time();
             homeDatabaseItemLy.last = dengerObject.getTimeago();
-            homeDatabaseItemLy.setBackgroundResource(dengerObject.getIs_error() == 1 ? R.drawable.danger_danger_bg : R.drawable.danger_nomal_bg);
-            final ArrayList<DengerObject.DangerData> items = dengerObject.getData();
-            if (items != null && items.size() != 0) {
-                for (int j = 0; j < items.size(); j++) {
-                        homeDatabaseItemLy.addItem(items.get(j));
-                }
-                if (items.size()>1)
-                    homeDatabaseItemLy.startMyAnimation(0);
-            }
-
+            homeDatabaseItemLy.id = dengerObject.getId();
+            homeDatabaseItemLy.myMainActivity = activity instanceof MyMainActivity ? (MyMainActivity) activity : null;
+            homeDatabaseItemLy.setBackgroundResource(dengerObject.getIs_error() == 1 ? R.drawable.danger_danger_selector : R.drawable.danger_nomal_selector);
+            homeDatabaseItemLy.setData(dengerObject.getData());
         }
     }
 }

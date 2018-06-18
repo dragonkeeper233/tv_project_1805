@@ -13,7 +13,7 @@ public class UrlUtils {
     public static String SCREEN_DATABSE = "/screen/database";
     public static String SCREEN_DANGER = "/screen/danger";
     public static String SCREEN_REPORT = "/screen/report";
-    public static String DIALOG_FILE = "dialog/file";
+    public static String DIALOG_FILE = "/dialog/file";
 
     public static String NEWS_BASE = "/news/base";
     public static String NEWS_RECENT = "/news/recent";

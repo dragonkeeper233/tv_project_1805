@@ -10,16 +10,21 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.wytv.cc.mytvapp.Object.DengerObject;
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.CommonUtils;
 import com.wytv.cc.mytvapp.activity.MyMainActivity;
 
 import java.util.ArrayList;
 
-public class HomeDatabaseItemLy extends RelativeLayout {
+public class HomeDatabaseItemLy extends RelativeLayout implements View.OnClickListener {
     public String time;
     public String last;
     private ArrayList<View> viewItemList = new ArrayList<View>();
+    private ArrayList<DengerObject.DangerData> items;
+    public MyMainActivity myMainActivity;
+    public String id;
+
 
     public HomeDatabaseItemLy(Context context) {
         super(context);
@@ -36,6 +41,17 @@ public class HomeDatabaseItemLy extends RelativeLayout {
         setMyStyle();
     }
 
+    public void setData(final ArrayList<DengerObject.DangerData> items) {
+        this.items = items;
+        if (items != null && items.size() != 0) {
+            for (int j = 0; j < items.size(); j++) {
+                addItem(items.get(j));
+            }
+            if (items.size() > 1)
+                startMyAnimation(0);
+        }
+    }
+
     public void addItem(Object data) {
         if (data == null)
             return;
@@ -49,6 +65,8 @@ public class HomeDatabaseItemLy extends RelativeLayout {
     }
 
     private void setMyStyle() {
+        setFocusable(true);
+        setOnClickListener(this);
         int padding = CommonUtils.dip2px(getContext(), 0);
         setPadding(padding, padding, padding, padding);
     }
@@ -110,4 +128,16 @@ public class HomeDatabaseItemLy extends RelativeLayout {
         return currentshow;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (myMainActivity != null && items != null && items.size() > 0) {
+            final ArrayList<DengerObject.DangerData> dangerDatas = this.items;
+            if (currentshow < dangerDatas.size()) {
+                DengerObject.DangerData dangerData = dangerDatas.get(currentshow);
+                if (dangerData != null) {
+                    myMainActivity.showMyDialog("file", dangerData.getType(), id);
+                }
+            }
+        }
+    }
 }

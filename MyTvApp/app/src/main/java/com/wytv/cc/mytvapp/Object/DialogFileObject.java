@@ -32,7 +32,7 @@ public class DialogFileObject {
 
     public class Item {
         float[] width;
-        ArrayList<String> data;
+        ArrayList<ArrayList<String>> data;
 
         public float[] getWidth() {
             return width;
@@ -42,11 +42,11 @@ public class DialogFileObject {
             this.width = width;
         }
 
-        public ArrayList<String> getData() {
+        public ArrayList<ArrayList<String>> getData() {
             return data;
         }
 
-        public void setData(ArrayList<String> data) {
+        public void setData(ArrayList<ArrayList<String>> data) {
             this.data = data;
         }
     }
