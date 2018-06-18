@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.wytv.cc.mytvapp.Object.ScreenReportObject;
 import com.wytv.cc.mytvapp.Object.ScreenSeverObject;
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.activity.MyMainActivity;
 import com.wytv.cc.mytvapp.http.MyHttp;
 import com.wytv.cc.mytvapp.http.MyHttpInterfae;
 
@@ -40,6 +41,7 @@ public class HomeReportView extends BaseView implements IBaseView, View.OnClickL
     public void init(Context context) {
         View.inflate(context, R.layout.layout_home_report, this);
         recyclerView = findViewById(R.id.report_rv);
+        recyclerView.setFocusable(true);
         dayBtn = findViewById(R.id.day);
         dayBtn.setOnClickListener(this);
         weekBtn = findViewById(R.id.week);
@@ -116,7 +118,8 @@ public class HomeReportView extends BaseView implements IBaseView, View.OnClickL
             return;
         GridLayoutManager mgr = new GridLayoutManager(getContext(), screenReportObject.getReportByDates().size() + 1);
         recyclerView.setLayoutManager(mgr);
-        recyclerView.setAdapter(new RrportItemAdapter(screenReportObject, getContext()));
+        recyclerView.setAdapter(new RrportItemAdapter(screenReportObject, getContext()
+                , activity instanceof MyMainActivity ? (MyMainActivity) activity : null));
         alreadyRefresh(currentTime);
     }
 

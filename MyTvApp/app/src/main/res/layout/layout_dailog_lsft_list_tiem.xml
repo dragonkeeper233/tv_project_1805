@@ -13,6 +13,6 @@
         android:lines="1"
         android:padding="5dp"
         android:textColor="@color/white"
-        android:textSize="14dp" />
+        android:textSize="15dp" />
 
 </LinearLayout>

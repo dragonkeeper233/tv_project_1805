@@ -61,9 +61,9 @@ public class DialogRightListAdapter extends BaseAdapter {
             holder.bottomDv = convertView.findViewById(R.id.divide_bottom);
             for (int i = 0; i < mycount; i++) {
                 TextView textView = new TextView(context);
-                textView.setPadding(0, CommonUtils.dip2px(context, 2), 0, CommonUtils.dip2px(context, 2));
+                textView.setPadding(CommonUtils.dip2px(context, 2), CommonUtils.dip2px(context, 5), 0, CommonUtils.dip2px(context, 5));
                 textView.setTextColor(context.getResources().getColor(R.color.white));
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
                 textView.setGravity(Gravity.LEFT);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,
                         LinearLayout.LayoutParams.WRAP_CONTENT);

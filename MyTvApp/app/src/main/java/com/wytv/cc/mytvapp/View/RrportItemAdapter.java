@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.wytv.cc.mytvapp.Object.ScreenReportObject;
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.CommonUtils;
+import com.wytv.cc.mytvapp.activity.MyMainActivity;
 
 import java.util.HashMap;
 
@@ -31,10 +32,12 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Context context;
     private LayoutInflater inf;
     private int width;
+    public MyMainActivity activity;
 
-    public RrportItemAdapter(ScreenReportObject screenReportObject, Context context) {
+    public RrportItemAdapter(ScreenReportObject screenReportObject, Context context, MyMainActivity activity) {
         this.screenReportObject = screenReportObject;
         this.context = context;
+        this.activity = activity;
         inf = LayoutInflater.from(context);
         if (screenReportObject != null && screenReportObject.getReportByDates() != null && screenReportObject.getReportByDates().size() > 0) {
             width = (CommonUtils.getScreenWidth(context) - CommonUtils.dip2px(context, 80)) / (screenReportObject.getReportByDates().size() + 1);
@@ -69,6 +72,7 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         holder.itemView.getLayoutParams().width = width;
@@ -100,10 +104,11 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 return;
             int line = position / (screenReportObject.getReportByDates().size() + 1);
             int count = (position % (screenReportObject.getReportByDates().size() + 1)) - 1;
-            String itemKey = screenReportObject.getField().get(line - 1);
+            final String itemKey = screenReportObject.getField().get(line - 1);
             if (screenReportObject.getReportByDates().get(count) != null && screenReportObject.getReportByDates().get(count).getReportItem() != null)
                 reportItem = screenReportObject.getReportByDates().get(count).getReportItem().get(itemKey);
             if (reportItem != null) {
+                final String id = screenReportObject.getReportByDates().get(count).getId();
                 String tlStr = "";
                 if (reportItem.getAdd() > 0)
                     tlStr = tlStr + "增加" + reportItem.getAdd();
@@ -139,8 +144,14 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     contentViewHolder.content_Img0.setImageResource(R.drawable.report_0_shap);
                     contentViewHolder.content_Img1.setVisibility(View.GONE);
                 }
-            } else {
-
+                contentViewHolder.root.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (activity != null) {
+                            activity.showMyDialog(MyMainActivity.DATA_TYPE_REPORT, itemKey, id);
+                        }
+                    }
+                });
             }
         }
     }
@@ -165,7 +176,7 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public static class LeftViewHolder extends RecyclerView.ViewHolder {
+    public static class LeftViewHolder extends BaseViewHolder {
 
         public TextView tv_left;
 
@@ -175,7 +186,7 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public static class TopViewHolder extends RecyclerView.ViewHolder {
+    public static class TopViewHolder extends BaseViewHolder {
 
         public TextView tv_top;
 
@@ -187,7 +198,7 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public static class ContentViewHolder extends RecyclerView.ViewHolder {
+    public static class ContentViewHolder extends BaseViewHolder {
 
         public TextView content_tv;
         public ImageView content_Img0, content_Img1;
@@ -199,5 +210,16 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             content_Img1 = v.findViewById(R.id.item_report_img_1);
         }
     }
+
+    public static class BaseViewHolder extends RecyclerView.ViewHolder {
+
+        public View root;
+
+        public BaseViewHolder(View v) {
+            super(v);
+            root = v;
+        }
+    }
+
 
 }

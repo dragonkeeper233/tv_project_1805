@@ -135,7 +135,7 @@ public class HomeDatabaseItemLy extends RelativeLayout implements View.OnClickLi
             if (currentshow < dangerDatas.size()) {
                 DengerObject.DangerData dangerData = dangerDatas.get(currentshow);
                 if (dangerData != null) {
-                    myMainActivity.showMyDialog("file", dangerData.getType(), id);
+                    myMainActivity.showMyDialog(MyMainActivity.DATA_TYPE_FILE, dangerData.getType(), id);
                 }
             }
         }

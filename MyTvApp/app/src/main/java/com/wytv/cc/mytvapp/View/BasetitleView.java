@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.wytv.cc.mytvapp.R;
@@ -28,7 +29,7 @@ public abstract class BasetitleView extends BaseView implements IBaseView, View.
 
 
     private TitleItemView[] titleItemViews = new TitleItemView[5];
-    private Button refreshBtn, leftBtn, rightBtn;
+    private ImageButton refreshBtn, leftBtn, rightBtn;
     protected TextView titleTv;
 
     public BasetitleView(Context context) {
@@ -64,11 +65,11 @@ public abstract class BasetitleView extends BaseView implements IBaseView, View.
                 titleItemViews[i].setTitle(getContentTitle()[i]);
             }
         }
-        refreshBtn = (Button) findViewById(R.id.title_refresh_btn);
+        refreshBtn = (ImageButton) findViewById(R.id.title_refresh_btn);
         refreshBtn.setOnClickListener(this);
-        leftBtn = (Button) findViewById(R.id.title_left_btn);
+        leftBtn = (ImageButton) findViewById(R.id.title_left_btn);
         leftBtn.setOnClickListener(this);
-        rightBtn = (Button) findViewById(R.id.title_right_btn);
+        rightBtn = (ImageButton) findViewById(R.id.title_right_btn);
         rightBtn.setOnClickListener(this);
     }
 

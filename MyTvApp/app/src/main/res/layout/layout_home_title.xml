@@ -84,29 +84,27 @@
             android:background="@drawable/home_title_btn_bg"
             android:padding="10dp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/title_refresh_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/title_btn_selector"
             android:gravity="center"
             android:padding="10dp"
-            android:text="刷新"
-            android:textColor="@drawable/text_color_selector"
-            android:textSize="16dp" />
+            android:scaleType="center"
+            android:src="@drawable/refresh" />
 
-        <Button
+        <ImageButton
             android:id="@+id/title_left_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/title_btn_selector"
             android:gravity="center"
             android:padding="10dp"
-            android:text="左"
-            android:textColor="@drawable/text_color_selector"
-            android:textSize="16dp" />
+            android:scaleType="center"
+            android:src="@drawable/arrow_left" />
 
-        <Button
+        <ImageButton
             android:id="@+id/title_right_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -114,8 +112,7 @@
             android:background="@drawable/title_btn_right_selector"
             android:gravity="center"
             android:padding="10dp"
-            android:text="右"
-            android:textColor="@drawable/text_color_selector"
-            android:textSize="16dp" />
+            android:scaleType="center"
+            android:src="@drawable/arrow_right" />
     </LinearLayout>
 </LinearLayout>

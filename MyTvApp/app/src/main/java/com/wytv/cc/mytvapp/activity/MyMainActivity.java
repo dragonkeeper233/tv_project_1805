@@ -125,9 +125,11 @@ public class MyMainActivity extends ComonActivity {
 
     }
 
+    public static final int DATA_TYPE_FILE = 3;
+    public static final int DATA_TYPE_REPORT = 4;
 
-    public void showMyDialog(String name, String type, String id) {
-        MyHttpInterfae.getDialogFile(new MyHttp.MyHttpCallback() {
+    public void showMyDialog(int dataType, String type, String id) {
+        MyHttp.MyHttpCallback callback = new MyHttp.MyHttpCallback() {
             @Override
             public void onFailure(int code, String reson) {
 
@@ -143,8 +145,12 @@ public class MyMainActivity extends ComonActivity {
                     handler.sendMessage(message);
                 }
             }
-        }, id, type);
-
+        };
+        if (dataType == DATA_TYPE_FILE) {
+            MyHttpInterfae.getDialogFile(callback, id, type);
+        } else if (dataType == DATA_TYPE_REPORT) {
+            MyHttpInterfae.getDialogReport(callback, id, type);
+        }
     }
 
     HomeDialog homeDialog;
@@ -159,7 +165,7 @@ public class MyMainActivity extends ComonActivity {
                 DialogFileObject dialogFileObject = (DialogFileObject) msg.obj;
                 if (homeDialog == null) {
                     homeDialog = new HomeDialog(MyMainActivity.this);
-                }else{
+                } else {
                     homeDialog.dismiss();
                 }
                 homeDialog.setDialogFileObject(dialogFileObject);

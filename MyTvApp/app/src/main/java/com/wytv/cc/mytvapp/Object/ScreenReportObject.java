@@ -70,6 +70,7 @@ public class ScreenReportObject {
         this.reportByDates = reportByDates;
     }
     public static class ReportByDate {
+        private String id;
         private String date;
         private HashMap<String, ReportItem> reportItem;
 
@@ -87,6 +88,14 @@ public class ScreenReportObject {
 
         public void setReportItem(HashMap<String, ReportItem> reportItem) {
             this.reportItem = reportItem;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
 
@@ -168,6 +177,8 @@ public class ScreenReportObject {
                         ReportByDate reportByDate = new ReportByDate();
                         reportByDate.date = key;
                         reportByDate.reportItem = map;
+                        String id = vol.optString("id");
+                        reportByDate.id =id;
                         reportByDates.add(reportByDate);
                     }
                 }

@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class HomeDialog extends Dialog {
-
     private TextView tvTitle;
     private ListView listView;
     private ListView rightLv;
@@ -57,10 +56,13 @@ public class HomeDialog extends Dialog {
         listView.setFocusable(true);
         listView.setItemsCanFocus(true);
         rightLv = findViewById(R.id.dialog_content_rv);
+        rightLv.setFocusable(true);
+        rightLv.setItemsCanFocus(false);
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics d = getContext().getResources().getDisplayMetrics(); // 获取屏幕宽、高用
-        lp.width = (int) (d.widthPixels * 0.8);
+        lp.width = (int) (d.widthPixels * 0.7);
+        lp.height = (int) (d.heightPixels * 0.6);
         dialogWindow.setAttributes(lp);
     }
 

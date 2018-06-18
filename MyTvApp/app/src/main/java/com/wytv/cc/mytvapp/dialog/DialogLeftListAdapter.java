@@ -70,14 +70,22 @@ public class DialogLeftListAdapter extends BaseAdapter {
             value = items.get(key);
         }
         holder.tv.setText(TextUtils.isEmpty(value) ? "" : value);
-        convertView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus && onMySelectedListener != null) {
+            public void onClick(View v) {
+                if (onMySelectedListener != null) {
                     onMySelectedListener.onSelect(key, position);
                 }
             }
         });
+//        convertView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus && onMySelectedListener != null) {
+//                    onMySelectedListener.onSelect(key, position);
+//                }
+//            }
+//        });
         return convertView;
     }
 

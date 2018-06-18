@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +31,10 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 
-public class NewsBanderView extends BaseView implements IBaseView, ViewPager.OnPageChangeListener {
+public class NewsBanderView extends BaseView implements IBaseView, ViewPager.OnPageChangeListener, View.OnClickListener {
     private TextView titleTv, contentTv, timeTv;
     private Banner banner;
+    private ImageButton leftBtn, rightBtn;
 
 
     public NewsBanderView(Context context) {
@@ -59,6 +61,10 @@ public class NewsBanderView extends BaseView implements IBaseView, ViewPager.OnP
         titleTv = (TextView) findViewById(R.id.banner_text_title);
         contentTv = (TextView) findViewById(R.id.banner_text_content);
         timeTv = (TextView) findViewById(R.id.banner_text_time);
+        leftBtn = findViewById(R.id.banner_left_btn);
+        leftBtn.setOnClickListener(this);
+        rightBtn = findViewById(R.id.banner_right_btn);
+        rightBtn.setOnClickListener(this);
         //设置banner样式
         banner.setBannerStyle(BannerConfig.NOT_INDICATOR);
         //设置图片加载器
@@ -204,5 +210,15 @@ public class NewsBanderView extends BaseView implements IBaseView, ViewPager.OnP
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.banner_left_btn:
+                break;
+            case R.id.banner_right_btn:
+                break;
+        }
     }
 }

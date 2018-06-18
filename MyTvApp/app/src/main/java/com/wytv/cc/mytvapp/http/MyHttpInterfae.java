@@ -65,4 +65,8 @@ public class MyHttpInterfae {
     public static void getDialogFile(MyHttp.MyHttpCallback callback, String id, String field) {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_FILE, "&id=" + id + "&field=" + field, callback);
     }
+
+    public static void getDialogReport(MyHttp.MyHttpCallback callback, String id, String field) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_REPORT, "&id=" + id + "&field=" + field, callback);
+    }
 }

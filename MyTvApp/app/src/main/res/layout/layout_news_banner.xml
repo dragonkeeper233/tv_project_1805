@@ -6,12 +6,38 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/banner"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:background="@color/news_banner_blue" />
+        android:layout_marginLeft="15dp">
+
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/news_banner_blue"
+            android:focusable="false" />
+
+        <ImageButton
+            android:id="@+id/banner_left_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/banner"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dp"
+            android:src="@drawable/banner_left_selector"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/banner_right_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/banner"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/banner_right_selector"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
