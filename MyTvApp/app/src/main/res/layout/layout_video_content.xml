@@ -18,18 +18,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <TableLayout android:background="@color/white"
+        <TableLayout
             android:id="@+id/video_start"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
         android:id="@+id/video_rv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:focusable="false"
+        android:paddingLeft="5dp" />
 
 </LinearLayout>

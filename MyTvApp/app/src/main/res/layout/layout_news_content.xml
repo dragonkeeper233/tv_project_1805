@@ -6,12 +6,13 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <android.support.v7.widget.RecyclerView
+    <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
         android:id="@+id/news_left_rv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="5dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:focusable="false" />
 
     <ImageView
         android:layout_width="1dp"
@@ -20,11 +21,12 @@
         android:layout_marginTop="10dp"
         android:background="@color/news_content_line_color" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
         android:id="@+id/news_right_rv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:focusable="false" />
 
 </LinearLayout>

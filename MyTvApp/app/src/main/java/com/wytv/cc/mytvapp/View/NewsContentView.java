@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.wytv.cc.mytvapp.Object.NewsContentObject;
 import com.wytv.cc.mytvapp.Object.PhotoObject;
 import com.wytv.cc.mytvapp.R;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsContentView extends BaseView implements IBaseView {
-    private RecyclerView leftRv, rightRv;
+    private RecyclerViewTV leftRv, rightRv;
 
 
     public NewsContentView(Context context) {
@@ -50,12 +51,16 @@ public class NewsContentView extends BaseView implements IBaseView {
     @Override
     public void init(Context context) {
         View.inflate(context, R.layout.layout_news_content, this);
-        leftRv = (RecyclerView) findViewById(R.id.news_left_rv);
+        leftRv = (RecyclerViewTV) findViewById(R.id.news_left_rv);
         LinearLayoutManager leftLm = new LinearLayoutManager(context);
         leftRv.setLayoutManager(leftLm);
-        rightRv = (RecyclerView) findViewById(R.id.news_right_rv);
+        leftRv.setSelectedItemAtCentered(true);
+        leftRv.setOnItemListener(leftOnItemListener);
+        rightRv = (RecyclerViewTV) findViewById(R.id.news_right_rv);
         LinearLayoutManager rightLm = new LinearLayoutManager(context);
         rightRv.setLayoutManager(rightLm);
+        rightRv.setSelectedItemAtCentered(true);
+        rightRv.setOnItemListener(rightOnItemListener);
     }
 
     @Override
@@ -85,6 +90,8 @@ public class NewsContentView extends BaseView implements IBaseView {
 
     }
 
+    NewsItemAdapter leftAdapter, rightAdapter;
+
     @Override
     public void handleSuccess(Object obj, long currentTime) {
         NewsContentObject newsContentObject = (NewsContentObject) obj;
@@ -93,8 +100,10 @@ public class NewsContentView extends BaseView implements IBaseView {
                 final List<NewsContentObject.NewsObject> leftList = newsContentObject.getData().subList(0, newsContentObject.getLeft());
                 final List<NewsContentObject.NewsObject> rightList = newsContentObject.getData().subList
                         (newsContentObject.getLeft(), newsContentObject.getData().size());
-                leftRv.setAdapter(new NewsItemAdapter(leftList, newsContentObject.getDates(), activity));
-                rightRv.setAdapter(new NewsItemAdapter(rightList, newsContentObject.getDates(), activity));
+                leftAdapter = new NewsItemAdapter(leftList, newsContentObject.getDates(), activity,leftRv);
+                leftRv.setAdapter(leftAdapter);
+                rightAdapter = new NewsItemAdapter(rightList, newsContentObject.getDates(), activity,rightRv);
+                rightRv.setAdapter(rightAdapter);
             }
 
         }
@@ -106,6 +115,49 @@ public class NewsContentView extends BaseView implements IBaseView {
         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
         alreadyRefresh(currentTime);
     }
+
+    RecyclerViewTV.OnItemListener leftOnItemListener = new RecyclerViewTV.OnItemListener() {
+        @Override
+        public void onItemPreSelected(RecyclerViewTV parent, View itemView, int position) {
+
+        }
+
+        @Override
+        public void onItemSelected(RecyclerViewTV parent, View itemView, int position) {
+            if (leftAdapter != null) {
+                leftAdapter.setCurrentShow(position);
+            }
+        }
+
+        @Override
+        public void onReviseFocusFollow(RecyclerViewTV parent, View itemView, int position) {
+            if (leftAdapter != null) {
+                leftAdapter.setCurrentShow(position);
+            }
+        }
+    };
+
+    RecyclerViewTV.OnItemListener rightOnItemListener = new RecyclerViewTV.OnItemListener() {
+        @Override
+        public void onItemPreSelected(RecyclerViewTV parent, View itemView, int position) {
+
+        }
+
+        @Override
+        public void onItemSelected(RecyclerViewTV parent, View itemView, int position) {
+            if (rightAdapter != null) {
+                rightAdapter.setCurrentShow(position);
+            }
+        }
+
+        @Override
+        public void onReviseFocusFollow(RecyclerViewTV parent, View itemView, int position) {
+            if (rightAdapter != null) {
+                rightAdapter.setCurrentShow(position);
+            }
+
+        }
+    };
 
 
 }

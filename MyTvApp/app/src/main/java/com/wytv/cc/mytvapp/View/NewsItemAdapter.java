@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.wytv.cc.mytvapp.Object.NewsContentObject;
 import com.wytv.cc.mytvapp.R;
 
@@ -24,18 +25,22 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
     private Context context;
     private LayoutInflater inf;
     private int currentShow;
+    private RecyclerViewTV recyclerViewTV;
 
     public NewsItemAdapter(List<NewsContentObject.NewsObject> newsObjects,
-                           HashMap<String, NewsContentObject.NewsDate> dateHashMap, Context context) {
+                           HashMap<String, NewsContentObject.NewsDate> dateHashMap, Context context, RecyclerViewTV recyclerViewTV) {
         this.dateHashMap = dateHashMap;
         this.newsObjects = newsObjects;
         this.context = context;
+        this.recyclerViewTV = recyclerViewTV;
         inf = LayoutInflater.from(context);
     }
 
     public void setCurrentShow(int show) {
         currentShow = show;
-        notifyDataSetChanged();
+        if (recyclerViewTV.getScrollState() == RecyclerView.SCROLL_STATE_IDLE && (recyclerViewTV.isComputingLayout() == false)) {
+            notifyDataSetChanged();
+        }
     }
 
     public int getCurrentShow() {
@@ -67,6 +72,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
         View v = inf.inflate(R.layout.layout_news_item, parent, false);
         return new ViewHolder(v);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {

@@ -19,11 +19,15 @@
         android:padding="10dp"
         android:scaleType="centerCrop" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
         android:id="@+id/photo_rv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="1" />
-
+        android:paddingLeft="5dp"
+        android:layout_weight="1"
+        android:focusable="false" />
+    <!--<com.open.androidtvwidget.view.MainUpView-->
+        <!--android:id="@+id/phtot_mainupview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 </LinearLayout>
