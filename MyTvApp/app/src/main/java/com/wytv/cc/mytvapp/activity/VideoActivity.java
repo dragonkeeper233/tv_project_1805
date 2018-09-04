@@ -29,6 +29,7 @@ public class VideoActivity extends ComonActivity {
         lastTiemTv = (TextView) findViewById(R.id.video_time_tv);
         videoContentView = (VideoContentView) findViewById(R.id.video_content_ly);
         videoContentView.setActivity(this);
+        setFirstFocus(getIntent());
         refresh();
     }
 
@@ -77,8 +78,26 @@ public class VideoActivity extends ComonActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setFirstFocus(intent);
+    }
+
+    private void setFirstFocus(Intent intent) {
+        String name = intent.getStringExtra("name");
+        if ("toRight".equals(name)) {
+            if (videoTitleView != null)
+                videoTitleView.setFocus(false);
+        } else if ("toLeft".equals(name)) {
+            if (videoTitleView != null)
+                videoTitleView.setFocus(true);
+        }
+    }
+
+    @Override
     public void toRight() {
         Intent intent = new Intent(this, MyMainActivity.class);
+        intent.putExtra("name", "toRight");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
@@ -86,6 +105,7 @@ public class VideoActivity extends ComonActivity {
     @Override
     public void toLeft() {
         Intent intent = new Intent(this, PhotoActivity.class);
+        intent.putExtra("name", "toLeft");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
@@ -100,7 +120,7 @@ public class VideoActivity extends ComonActivity {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             toLeft();
             return false;
-        }else {
+        } else {
             return super.onKeyDown(keyCode, event);
         }
 

@@ -73,7 +73,12 @@ public abstract class BasetitleView extends BaseView implements IBaseView, View.
         rightBtn.setOnClickListener(this);
     }
 
-
+    public void setFocus(boolean left) {
+        if (left && leftBtn != null)
+            leftBtn.requestFocus();
+        if (!left && rightBtn != null)
+            rightBtn.requestFocus();
+    }
     @Override
     public void loadData() {
 

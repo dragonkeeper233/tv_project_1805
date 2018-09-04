@@ -1,37 +1,26 @@
 package com.wytv.cc.mytvapp.View;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.dyhdyh.support.countdowntimer.CountDownTimerSupport;
+import com.dyhdyh.support.countdowntimer.OnCountDownTimerListener;
 import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.wytv.cc.mytvapp.Object.NewsContentObject;
-import com.wytv.cc.mytvapp.Object.PhotoObject;
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.http.MyHttp;
 import com.wytv.cc.mytvapp.http.MyHttpInterfae;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class NewsContentView extends BaseView implements IBaseView {
+public class NewsContentView extends BaseView implements IBaseView, OnCountDownTimerListener {
     private RecyclerViewTV leftRv, rightRv;
-
+    private CountDownTimerSupport mTimer;
 
     public NewsContentView(Context context) {
         super(context);
@@ -48,19 +37,22 @@ public class NewsContentView extends BaseView implements IBaseView {
         init(context);
     }
 
+    private LinearLayoutManager leftLm, rightLm;
+
     @Override
     public void init(Context context) {
         View.inflate(context, R.layout.layout_news_content, this);
         leftRv = (RecyclerViewTV) findViewById(R.id.news_left_rv);
-        LinearLayoutManager leftLm = new LinearLayoutManager(context);
+        leftLm = new LinearLayoutManager(context);
         leftRv.setLayoutManager(leftLm);
         leftRv.setSelectedItemAtCentered(true);
         leftRv.setOnItemListener(leftOnItemListener);
         rightRv = (RecyclerViewTV) findViewById(R.id.news_right_rv);
-        LinearLayoutManager rightLm = new LinearLayoutManager(context);
+        rightLm = new LinearLayoutManager(context);
         rightRv.setLayoutManager(rightLm);
         rightRv.setSelectedItemAtCentered(true);
         rightRv.setOnItemListener(rightOnItemListener);
+        initTimer();
     }
 
     @Override
@@ -94,16 +86,18 @@ public class NewsContentView extends BaseView implements IBaseView {
 
     @Override
     public void handleSuccess(Object obj, long currentTime) {
+        stopTimer();
         NewsContentObject newsContentObject = (NewsContentObject) obj;
         if (newsContentObject != null && newsContentObject.getData() != null && newsContentObject.getData().size() != 0) {
             if (newsContentObject.getData().size() > newsContentObject.getLeft()) {
                 final List<NewsContentObject.NewsObject> leftList = newsContentObject.getData().subList(0, newsContentObject.getLeft());
                 final List<NewsContentObject.NewsObject> rightList = newsContentObject.getData().subList
                         (newsContentObject.getLeft(), newsContentObject.getData().size());
-                leftAdapter = new NewsItemAdapter(leftList, newsContentObject.getDates(), activity,leftRv);
+                leftAdapter = new NewsItemAdapter(leftList, newsContentObject.getDates(), activity, leftRv);
                 leftRv.setAdapter(leftAdapter);
-                rightAdapter = new NewsItemAdapter(rightList, newsContentObject.getDates(), activity,rightRv);
+                rightAdapter = new NewsItemAdapter(rightList, newsContentObject.getDates(), activity, rightRv);
                 rightRv.setAdapter(rightAdapter);
+                mTimer.start();
             }
 
         }
@@ -159,5 +153,46 @@ public class NewsContentView extends BaseView implements IBaseView {
         }
     };
 
+    private static final long TOTAL_TIME = 10000000;
+    private void initTimer() {
+        mTimer = new CountDownTimerSupport(TOTAL_TIME, 10000);
+        mTimer.setOnCountDownTimerListener(this);
+    }
 
+    private void stopTimer() {
+        if (mTimer != null) {
+            mTimer.stop();
+            mTimer.reset();
+        }
+    }
+
+    private void move(int count) {
+        if (count < leftAdapter.getItemCount()) {
+            leftAdapter.setCurrentShow(count);
+            leftLm.scrollToPositionWithOffset(count, 0);
+            leftLm.setStackFromEnd(true);
+        } else if (count < leftAdapter.getItemCount() + rightAdapter.getItemCount() && count -leftAdapter.getItemCount() >= 0) {
+            rightAdapter.setCurrentShow(count -leftAdapter.getItemCount());
+            rightLm.scrollToPositionWithOffset(count -leftAdapter.getItemCount(), 0);
+            rightLm.setStackFromEnd(true);
+        } else {
+            activity.refresh();
+        }
+    }
+
+
+    @Override
+    public void onTick(long millisUntilFinished) {
+        int count = (int) (TOTAL_TIME - millisUntilFinished) / 10000;
+        try {
+            move(count);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onFinish() {
+        activity.refresh();
+    }
 }

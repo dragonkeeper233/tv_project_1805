@@ -6,11 +6,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
+import android.widget.LinearLayout;
 
 import com.wytv.cc.mytvapp.MyApp;
 import com.wytv.cc.mytvapp.Object.DialogFileObject;
 import com.wytv.cc.mytvapp.R;
 
+import com.wytv.cc.mytvapp.Utils.CommonUtils;
 import com.wytv.cc.mytvapp.Utils.MYSharePreference;
 import com.wytv.cc.mytvapp.View.HomeDangerView;
 import com.wytv.cc.mytvapp.View.HomeDatabaseView;
@@ -31,6 +33,7 @@ public class MyMainActivity extends ComonActivity {
     private HomeDangerView homeDangerView;
 
     private HomeReportView homeReportView;
+    private LinearLayout second_ly ;
 
     @Override
     protected long getMillisInFutureTime() {
@@ -51,7 +54,8 @@ public class MyMainActivity extends ComonActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        second_ly = (LinearLayout)findViewById(R.id.second_ly) ;
+//        second_ly.getLayoutParams().height =(int) (CommonUtils.getScreenHeight(this)/3.5);
         hometitleView = (HometitleView) findViewById(R.id.screen_title);
         hometitleView.activity = this;
         homeServerView = (HomeServerView) findViewById(R.id.screen_sever);
@@ -66,6 +70,7 @@ public class MyMainActivity extends ComonActivity {
         homeDatabaseView.activity = this;
         homeReportView = (HomeReportView) findViewById(R.id.screen_report);
         homeReportView.activity = this;
+        setFirstFocus(getIntent());
         refresh();
     }
 
@@ -86,6 +91,21 @@ public class MyMainActivity extends ComonActivity {
             homeReportView.refresh(time);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setFirstFocus(intent);
+    }
+    private void setFirstFocus(Intent intent){
+        String name = intent.getStringExtra("name");
+        if ("toRight".equals(name)) {
+            if (hometitleView != null)
+                hometitleView.setFocus(false);
+        } else if ("toLeft".equals(name)) {
+            if (hometitleView != null)
+                hometitleView.setFocus(true);
+        }
+    }
 
     @Override
     public void onTick(long millisUntilFinished) {
@@ -97,6 +117,7 @@ public class MyMainActivity extends ComonActivity {
     @Override
     public void toRight() {
         Intent intent = new Intent(this, NewsActivity.class);
+        intent.putExtra("name", "toRight");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
@@ -104,6 +125,7 @@ public class MyMainActivity extends ComonActivity {
     @Override
     public void toLeft() {
         Intent intent = new Intent(this, VideoActivity.class);
+        intent.putExtra("name", "toLeft");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
@@ -126,9 +148,13 @@ public class MyMainActivity extends ComonActivity {
     }
 
     public static final int DATA_TYPE_FILE = 3;
+    public static final int DATA_TYPE_FILE_MORE = 6;
     public static final int DATA_TYPE_REPORT = 4;
+    public static final int DATA_TYPE_DATABASE = 5;
+    public static final int DATA_TYPE_DATABASE_MORE = 7;
+    public static final int DATA_TYPE_REPORT_MORE = 8;
 
-    public void showMyDialog(int dataType, String type, String id) {
+    public void showMyDialog( final int dataType, String type,final String id) {
         MyHttp.MyHttpCallback callback = new MyHttp.MyHttpCallback() {
             @Override
             public void onFailure(int code, String reson) {
@@ -139,6 +165,13 @@ public class MyMainActivity extends ComonActivity {
             public void onSuccess(String result) {
                 DialogFileObject dialogFileObject = DialogFileObject.getObj(result);
                 if (dialogFileObject != null) {
+                     if (dataType == DATA_TYPE_DATABASE_MORE) {
+                         dialogFileObject.setTitle("数据库更多");
+                    } else if (dataType == DATA_TYPE_FILE_MORE) {
+                         dialogFileObject.setTitle("文件更多");
+                    } else if (dataType == DATA_TYPE_REPORT_MORE) {
+                         dialogFileObject.setTitle("报告更多-" + id);
+                     }
                     Message message = Message.obtain();
                     message.what = DIALOG_MESSAGE_SUCCESS;
                     message.obj = dialogFileObject;
@@ -147,9 +180,17 @@ public class MyMainActivity extends ComonActivity {
             }
         };
         if (dataType == DATA_TYPE_FILE) {
-            MyHttpInterfae.getDialogFile(callback, id, type);
+            MyHttpInterfae.getDialogFile(callback, id);
         } else if (dataType == DATA_TYPE_REPORT) {
             MyHttpInterfae.getDialogReport(callback, id, type);
+        } else if (dataType == DATA_TYPE_DATABASE) {
+            MyHttpInterfae.getDialogDatabase(callback, id);
+        } else if (dataType == DATA_TYPE_DATABASE_MORE) {
+            MyHttpInterfae.getDialogDatabaseMore(callback);
+        } else if (dataType == DATA_TYPE_FILE_MORE) {
+            MyHttpInterfae.getDialogFileMore(callback);
+        }else if (dataType == DATA_TYPE_REPORT_MORE){
+            MyHttpInterfae.getDialogReportMore(callback, type);
         }
     }
 
@@ -167,6 +208,7 @@ public class MyMainActivity extends ComonActivity {
                     homeDialog = new HomeDialog(MyMainActivity.this);
                 } else {
                     homeDialog.dismiss();
+                    homeDialog.reset();
                 }
                 homeDialog.setDialogFileObject(dialogFileObject);
                 homeDialog.show();

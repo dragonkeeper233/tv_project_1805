@@ -12,12 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.wytv.cc.mytvapp.Object.ScreenMonitorObject;
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.http.MyHttp;
@@ -149,6 +151,7 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
                 setChartData(entries2, getResources().getColor(R.color.chat_line_blue_color)),
                 setChartData(entries3, getResources().getColor(R.color.chat_line_green_color)),
                 setChartData(entries4, getResources().getColor(R.color.chat_line_yellow_color)));
+        mChart.getXAxis().setValueFormatter(new MyAxisValueFormatter(screenMonitorObjects));
         mChart.setData(data);
         mChart.invalidate();
     }
@@ -237,4 +240,24 @@ public class HomeDrawView extends BaseView implements IBaseView, View.OnClickLis
         lineDataSet.setHighlightEnabled(false);
         return lineDataSet;
     }
+
+    private class MyAxisValueFormatter implements IAxisValueFormatter {
+        ArrayList<ScreenMonitorObject> screenMonitorObjects;
+
+        public MyAxisValueFormatter(ArrayList<ScreenMonitorObject> screenMonitorObjects) {
+            this.screenMonitorObjects = screenMonitorObjects;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            final ArrayList<ScreenMonitorObject> list = screenMonitorObjects;
+            int i = (int) value;
+            if (list != null && list.size() > i) {
+                return list.get(i).getDate();
+            }
+            return value + "";
+        }
+    }
+
+    ;
 }

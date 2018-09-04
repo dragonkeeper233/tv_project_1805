@@ -5,17 +5,22 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.wytv.cc.mytvapp.R;
+import com.wytv.cc.mytvapp.Utils.MediaUtils;
 import com.wytv.cc.mytvapp.http.MyHttp;
 import com.wytv.cc.mytvapp.http.MyHttpInterfae;
 import com.wytv.cc.mytvapp.Object.ScreenSeverObject;
 
 public class HomeServerView extends BaseView implements IBaseView {
     private TextView timerTv, lastTimeTv, cpuTv, cipanTv, tingdunTv, neicunTv, waiwangTv, neiwangTv;
+    private LinearLayout last_time_ly;
+    private long currentTime = System.currentTimeMillis();
+    private long TEN_TIME = 10 * 60 * 1000;
 
 
     public HomeServerView(Context context) {
@@ -44,6 +49,7 @@ public class HomeServerView extends BaseView implements IBaseView {
         neicunTv = findViewById(R.id.server_neicun_tv);
         waiwangTv = findViewById(R.id.server_waiwang_tv);
         neiwangTv = findViewById(R.id.server_neiwang_tv);
+        last_time_ly = findViewById(R.id.last_time_ly);
 
     }
 
@@ -76,6 +82,8 @@ public class HomeServerView extends BaseView implements IBaseView {
 
     @Override
     public void handleSuccess(Object obj, long currentTime) {
+        HomeServerView.this.currentTime = System.currentTimeMillis();
+        setDanger(false);
         ScreenSeverObject screenSeverObject = (ScreenSeverObject) obj;
         if (screenSeverObject == null)
             return;
@@ -102,6 +110,9 @@ public class HomeServerView extends BaseView implements IBaseView {
     @Override
     public void handleFailed(String str, long currentTime) {
         Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+        if (System.currentTimeMillis() - HomeServerView.this.currentTime > TEN_TIME) {
+            setDanger(true);
+        }
         alreadyRefresh(currentTime);
     }
 
@@ -110,5 +121,12 @@ public class HomeServerView extends BaseView implements IBaseView {
             timerTv.setText(count + "");
     }
 
+    private void setDanger(boolean danger) {
+        if (last_time_ly != null)
+            last_time_ly.setBackgroundResource(danger ? R.drawable.sever_time_waring_bg : R.drawable.sever_time_bg);
+        if (danger)
+            MediaUtils.getInstance().play(getContext());
+
+    }
 
 }

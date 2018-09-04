@@ -3,7 +3,7 @@ package com.wytv.cc.mytvapp.Object;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class DialogFileObject {
 //
@@ -26,9 +26,9 @@ public class DialogFileObject {
 //            "msg": "获取成功"
 //    }
 
-    private HashMap<String, String> field;
+    private LinkedHashMap<String, String> field;
     private String title;
-    private HashMap<String, Item> content;
+    private LinkedHashMap<String, Item> content;
 
     public class Item {
         float[] width;
@@ -51,11 +51,11 @@ public class DialogFileObject {
         }
     }
 
-    public HashMap<String, String> getField() {
+    public LinkedHashMap<String, String> getField() {
         return field;
     }
 
-    public void setField(HashMap<String, String> field) {
+    public void setField(LinkedHashMap<String, String> field) {
         this.field = field;
     }
 
@@ -67,18 +67,23 @@ public class DialogFileObject {
         this.title = title;
     }
 
-    public HashMap<String, Item> getContent() {
+    public LinkedHashMap<String, Item> getContent() {
         return content;
     }
 
-    public void setContent(HashMap<String, Item> content) {
+    public void setContent(LinkedHashMap<String, Item> content) {
         this.content = content;
     }
 
     public static DialogFileObject getObj(String js) {
-        Gson gson = new Gson();
-        DialogFileObject dialogFileObject = gson.fromJson(js, DialogFileObject.class);
-        return dialogFileObject;
+        try {
+            Gson gson = new Gson();
+            DialogFileObject dialogFileObject = gson.fromJson(js, DialogFileObject.class);
+            return dialogFileObject;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

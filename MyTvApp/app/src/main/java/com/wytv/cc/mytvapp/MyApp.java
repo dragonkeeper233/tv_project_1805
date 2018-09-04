@@ -35,14 +35,19 @@ public class MyApp extends Application {
     }
 
     private void initUrl() {
-        if (TextUtils.isEmpty(MYSharePreference.getInstance().getBaseUrl()))
-            MYSharePreference.getInstance().setBaseUrl(UrlUtils.INIT_BASE_URL);
+        if (TextUtils.isEmpty(MYSharePreference.getInstance().getBaseUrl())){
+            String url = CommonUtils.readAssetsTxt(this,"url");
+            MYSharePreference.getInstance().setBaseUrl(url);
+        }
         UrlUtils.BASE_URL = MYSharePreference.getInstance().getBaseUrl();
     }
 
     private void initToken() {
-        if (TextUtils.isEmpty(MYSharePreference.getInstance().getToken()))
-            MYSharePreference.getInstance().setToken(UrlUtils.INIT_TOKEN);
+        if (TextUtils.isEmpty(MYSharePreference.getInstance().getToken())){
+            String token = CommonUtils.readAssetsTxt(this,"token");
+            MYSharePreference.getInstance().setToken(token);
+        }
+
         UrlUtils.TOKEN = MYSharePreference.getInstance().getToken();
     }
 

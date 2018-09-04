@@ -62,11 +62,27 @@ public class MyHttpInterfae {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.VIDEO_LISTS, "&page=" + page + "&pageSize=" + pageSize, callback);
     }
 
-    public static void getDialogFile(MyHttp.MyHttpCallback callback, String id, String field) {
-        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_FILE, "&id=" + id + "&field=" + field, callback);
+    public static void getDialogFile(MyHttp.MyHttpCallback callback, String id) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_FILE, "&id=" + id, callback);
     }
 
     public static void getDialogReport(MyHttp.MyHttpCallback callback, String id, String field) {
         MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_REPORT, "&id=" + id + "&field=" + field, callback);
+    }
+
+    public static void getDialogDatabase(MyHttp.MyHttpCallback callback, String creatTime) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_DATABASE, "&create_time=" + creatTime, callback);
+    }
+
+    public static void getDialogFileMore(MyHttp.MyHttpCallback callback) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_FILES, "", callback);
+    }
+
+    public static void getDialogDatabaseMore(MyHttp.MyHttpCallback callback) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_DATABASES, "", callback);
+    }
+
+    public static void getDialogReportMore(MyHttp.MyHttpCallback callback, String field) {
+        MyHttp.get(UrlUtils.BASE_URL + UrlUtils.DIALOG_REPORTS, "&field=" + field, callback);
     }
 }

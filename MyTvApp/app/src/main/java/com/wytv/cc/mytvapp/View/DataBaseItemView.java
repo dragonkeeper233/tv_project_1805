@@ -48,11 +48,11 @@ public class DataBaseItemView {
     public void setContent(String add, String change, String delete) {
         if (contentTv != null) {
             String result = "";
-            if (!TextUtils.isEmpty(add))
+            if (!TextUtils.isEmpty(add) && !"0".equals(add))
                 result = " " + context.getResources().getString(R.string.add) + add;
-            if (!TextUtils.isEmpty(change))
+            if (!TextUtils.isEmpty(change) && !"0".equals(change))
                 result = result + " " + context.getResources().getString(R.string.update) + change;
-            if (!TextUtils.isEmpty(delete))
+            if (!TextUtils.isEmpty(delete) && !"0".equals(delete))
                 result = result + " " + context.getResources().getString(R.string.delete) + delete;
             contentTv.setText(result);
         }

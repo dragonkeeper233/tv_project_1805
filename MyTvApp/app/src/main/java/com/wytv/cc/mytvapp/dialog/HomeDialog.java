@@ -4,28 +4,28 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.wytv.cc.mytvapp.Object.DialogFileObject;
 import com.wytv.cc.mytvapp.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
-public class HomeDialog extends Dialog {
+public class HomeDialog extends Dialog implements RecyclerViewTV.OnItemListener, RecyclerViewTV.OnItemClickListener {
     private TextView tvTitle;
-    private ListView listView;
-    private ListView rightLv;
+    private RecyclerViewTV listView;
+    private RecyclerViewTV rightLv;
+    private ImageButton closeBtn;
 
     public DialogFileObject getDialogFileObject() {
         return dialogFileObject;
@@ -41,6 +41,11 @@ public class HomeDialog extends Dialog {
         super(context);
     }
 
+    public void reset(){
+        listView.setAdapter(null);
+        rightLv.setAdapter(null);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,16 +58,27 @@ public class HomeDialog extends Dialog {
 
         tvTitle = (TextView) findViewById(R.id.dialog_title);
         listView = findViewById(R.id.dialog_content_lv);
-        listView.setFocusable(true);
-        listView.setItemsCanFocus(true);
+        LinearLayoutManager leftLm = new LinearLayoutManager(getContext());
+        listView.setLayoutManager(leftLm);
+        listView.setSelectedItemAtCentered(true);
+        listView.setOnItemListener(this);
+        listView.setOnItemClickListener(this);
         rightLv = findViewById(R.id.dialog_content_rv);
-        rightLv.setFocusable(true);
-        rightLv.setItemsCanFocus(false);
+        LinearLayoutManager rightLm = new LinearLayoutManager(getContext());
+        rightLv.setLayoutManager(rightLm);
+        rightLv.setSelectedItemAtCentered(true);
+        closeBtn = (ImageButton) findViewById(R.id.dialog_close);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         Window dialogWindow = getWindow();
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         DisplayMetrics d = getContext().getResources().getDisplayMetrics(); // 获取屏幕宽、高用
-        lp.width = (int) (d.widthPixels * 0.7);
-        lp.height = (int) (d.heightPixels * 0.6);
+        lp.width = (int) (d.widthPixels * 0.9);
+        lp.height = (int) (d.heightPixels * 0.7);
         dialogWindow.setAttributes(lp);
     }
 
@@ -71,6 +87,8 @@ public class HomeDialog extends Dialog {
         super.show();
         updateData();
     }
+
+    private DialogLefAdapter dialogLefAdapter;
 
     public void updateData() {
         if (dialogFileObject == null)
@@ -88,15 +106,17 @@ public class HomeDialog extends Dialog {
                     ArrayList<String> result = toArray(dialogFileObject.getField());
                     if (result != null && result.size() > 0)
                         firstKey = result.get(0);
-                    DialogLeftListAdapter dialogLeftListAdapter = new DialogLeftListAdapter(dialogFileObject.getField(),
+                    dialogLefAdapter = new DialogLefAdapter(dialogFileObject.getField(),
                             result, getContext());
-                    dialogLeftListAdapter.setOnMySelectedListener(new DialogLeftListAdapter.OnMySelectedListener() {
+                    listView.setAdapter(dialogLefAdapter);
+                    listView.post(new Runnable() {
                         @Override
-                        public void onSelect(String key, int position) {
-                            updateRecycle(TextUtils.isEmpty(key) ? "default" : key);
+                        public void run() {
+                            if (listView!=null&&listView.getChildCount()!=0){
+                                listView.getChildAt(0).requestFocus();
+                            }
                         }
                     });
-                    listView.setAdapter(dialogLeftListAdapter);
                 }
             }
         }
@@ -104,31 +124,65 @@ public class HomeDialog extends Dialog {
     }
 
     private void updateRecycle(String key) {
-        if (TextUtils.isEmpty(key))
+        if (TextUtils.isEmpty(key)){
+            rightLv.setAdapter(null);
             return;
-        if (rightLv == null)
+        }
+        if (rightLv == null){
+            rightLv.setAdapter(null);
             return;
-        if (getContext() == null)
+        }
+        if (getContext() == null){
+            rightLv.setAdapter(null);
             return;
-        if (dialogFileObject.getContent() == null)
+        }
+        if (dialogFileObject.getContent() == null){
+            rightLv.setAdapter(null);
             return;
+        }
         DialogFileObject.Item item = dialogFileObject.getContent().get(key);
-        if (item == null || item.getData() == null || item.getWidth() == null)
+        if (item == null || item.getData() == null || item.getWidth() == null) {
+            rightLv.setAdapter(null);
             return;
-        rightLv.setAdapter(new DialogRightListAdapter(item, key, getContext()));
+        }
+        rightLv.setAdapter(new DialogRightAdapter(item, key, getContext()));
     }
 
-    private ArrayList<String> toArray(final HashMap<String, String> items) {
+    private ArrayList<String> toArray(final LinkedHashMap<String, String> items) {
         if (items == null || items.size() == 0)
             return null;
         ArrayList<String> result = new ArrayList<>();
         Iterator it = items.entrySet().iterator();
         String key;
         while (it.hasNext()) {
-            HashMap.Entry entry = (HashMap.Entry) it.next();
+            LinkedHashMap.Entry entry = (LinkedHashMap.Entry) it.next();
             key = (String) entry.getKey();
             result.add(key);
         }
         return result;
+    }
+
+    @Override
+    public void onItemPreSelected(RecyclerViewTV parent, View itemView, int position) {
+        itemView.setBackgroundResource(android.R.color.transparent);
+    }
+
+    @Override
+    public void onItemSelected(RecyclerViewTV parent, View itemView, int position) {
+        itemView.setBackgroundResource(R.color.news_content_yellow);
+    }
+
+    @Override
+    public void onReviseFocusFollow(RecyclerViewTV parent, View itemView, int position) {
+        itemView.setBackgroundResource(R.color.news_content_yellow);
+    }
+
+    @Override
+    public void onItemClick(RecyclerViewTV parent, View itemView, int position) {
+        itemView.setBackgroundResource(R.color.news_content_yellow);
+        if (dialogLefAdapter != null && dialogLefAdapter.keys != null && dialogLefAdapter.keys.size() > position) {
+            String key = dialogLefAdapter.keys.get(position);
+            updateRecycle(TextUtils.isEmpty(key) ? "default" : key);
+        }
     }
 }

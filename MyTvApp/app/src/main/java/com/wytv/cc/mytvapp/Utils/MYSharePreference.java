@@ -96,4 +96,23 @@ public class MYSharePreference {
         return preferences.getLong(VIDEO_TIME_SP, (long) 60000 * 60 * 3);
     }
 
+    private static final String FILE_NEW_SP = "FILE_NEW_SP";
+
+    public void setFileNewSp(long time) {
+        preferences.edit().putLong(FILE_NEW_SP, time).commit();
+    }
+
+    public long getFileNewSp() {
+        return preferences.getLong(FILE_NEW_SP, 0);
+    }
+
+    private static final String DATABASE_NEW_SP = "DATABASE_NEW_SP";
+
+    public void setDatabaseNewSp(long time) {
+        preferences.edit().putLong(DATABASE_NEW_SP, time).commit();
+    }
+
+    public long getDatabaseNewSp() {
+        return preferences.getLong(DATABASE_NEW_SP, 0);
+    }
 }

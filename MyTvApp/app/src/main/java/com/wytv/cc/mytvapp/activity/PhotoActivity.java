@@ -34,6 +34,7 @@ public class PhotoActivity extends ComonActivity {
         photoTimeTv = (TextView) findViewById(R.id.photo_time_tv);
         photoContentView = (PhotoContentView) findViewById(R.id.photo_content_ly);
         photoContentView.activity = this;
+        setFirstFocus(getIntent());
         refresh();
     }
 
@@ -61,8 +62,26 @@ public class PhotoActivity extends ComonActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setFirstFocus(intent);
+    }
+
+    private void setFirstFocus(Intent intent) {
+        String name = intent.getStringExtra("name");
+        if ("toRight".equals(name)) {
+            if (photoTitleView != null)
+                photoTitleView.setFocus(false);
+        } else if ("toLeft".equals(name)) {
+            if (photoTitleView != null)
+                photoTitleView.setFocus(true);
+        }
+    }
+
+    @Override
     public void toRight() {
         Intent intent = new Intent(this, VideoActivity.class);
+        intent.putExtra("name", "toRight");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
@@ -70,6 +89,7 @@ public class PhotoActivity extends ComonActivity {
     @Override
     public void toLeft() {
         Intent intent = new Intent(this, NewsActivity.class);
+        intent.putExtra("name", "toLeft");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
@@ -79,7 +99,7 @@ public class PhotoActivity extends ComonActivity {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             toLeft();
             return false;
-        }else {
+        } else {
             return super.onKeyDown(keyCode, event);
         }
 

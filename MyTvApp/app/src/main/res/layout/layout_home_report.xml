@@ -8,56 +8,11 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center_vertical|right"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/chat_btn_selector"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="日"
-            android:textColor="@drawable/text_color_selector"
-            android:textSize="12dp" />
-
-        <Button
-            android:id="@+id/week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/chat_btn_noselect_selector"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="周"
-            android:textColor="@drawable/text_color_selector"
-            android:textSize="12dp" />
-
-        <Button
-            android:id="@+id/month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/chat_btn_noselect_selector"
-            android:gravity="center"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="月"
-            android:textColor="@drawable/text_color_selector"
-            android:textSize="12dp" />
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
+    <com.open.androidtvwidget.leanback.recycle.RecyclerViewTV
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:id="@+id/report_rv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:focusable="false" />
 </LinearLayout>

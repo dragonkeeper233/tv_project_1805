@@ -27,6 +27,7 @@ public class DatabaseObject {
     private String date;
     private String timeago;
     private int is_warning;
+    private String create_time;
     private ArrayList<Data> data;
 
     public String getDate() {
@@ -59,6 +60,14 @@ public class DatabaseObject {
 
     public void setData(ArrayList<Data> data) {
         this.data = data;
+    }
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
     }
 
     public class Data {
@@ -137,6 +146,7 @@ public class DatabaseObject {
                         continue;
                     databaseObject.setTimeago(itemObj.getString("timeago"));
                     databaseObject.setIs_warning(itemObj.optInt("is_warning"));
+                    databaseObject.create_time = itemObj.optString("create_time");
                     JSONObject listObj = itemObj.getJSONObject("data");
                     if (listObj==null)
                         continue;

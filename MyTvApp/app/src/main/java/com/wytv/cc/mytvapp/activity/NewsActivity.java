@@ -40,6 +40,7 @@ public class NewsActivity extends ComonActivity {
         banderView.activity = this;
         newsContentView = (NewsContentView) findViewById(R.id.news_content_ly);
         newsContentView.activity = this;
+        setFirstFocus(getIntent());
         refresh();
     }
 
@@ -55,11 +56,26 @@ public class NewsActivity extends ComonActivity {
             newsContentView.refresh(time);
         }
     }
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setFirstFocus(intent);
+    }
+    private void setFirstFocus(Intent intent){
+        String name = intent.getStringExtra("name");
+        if ("toRight".equals(name)) {
+            if (newsTitleView != null)
+                newsTitleView.setFocus(false);
+        } else if ("toLeft".equals(name)) {
+            if (newsTitleView != null)
+                newsTitleView.setFocus(true);
+        }
+    }
 
     @Override
     public void toRight() {
         Intent intent = new Intent(this, PhotoActivity.class);
+        intent.putExtra("name","toRight");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
@@ -67,6 +83,7 @@ public class NewsActivity extends ComonActivity {
     @Override
     public void toLeft() {
         Intent intent = new Intent(this, MyMainActivity.class);
+        intent.putExtra("name","toLeft");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }

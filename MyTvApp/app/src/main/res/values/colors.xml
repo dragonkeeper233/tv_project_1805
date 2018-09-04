@@ -17,6 +17,7 @@
     <color name="white">#ffffff</color>
     <color name="yellow">#ffff00</color>
     <color name="chat_xy_text_color">#689fd0</color>
+    <color name="danger_waring_bg">#ff3333</color>
     <color name="chat_line_red_color">#f26c6c</color>
     <color name="chat_line_yellow_color">#e3c267</color>
     <color name="chat_line_blue_color">#689fd0</color>

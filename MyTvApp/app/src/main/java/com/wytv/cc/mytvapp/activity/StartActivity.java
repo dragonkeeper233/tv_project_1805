@@ -6,17 +6,10 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
-import android.widget.TableLayout;
 import android.widget.VideoView;
 
 import com.wytv.cc.mytvapp.R;
-import com.wytv.cc.mytvapp.View.PlayerManager;
-import com.wytv.cc.mytvapp.widget.media.IjkVideoView;
 
-import java.net.URI;
-import java.net.URL;
 
 public class StartActivity extends Activity implements MediaPlayer.OnCompletionListener {
     private VideoView ijkVideoView;

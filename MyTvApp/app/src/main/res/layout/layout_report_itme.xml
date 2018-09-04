@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="3dp"
-    android:paddingTop="3dp">
+    android:paddingBottom="6dp"
+    android:paddingTop="6dp">
 
     <TextView
         android:id="@+id/item_report_tv"
@@ -21,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
+        android:layout_marginTop="1dp"
         android:orientation="horizontal">
 
         <ImageView

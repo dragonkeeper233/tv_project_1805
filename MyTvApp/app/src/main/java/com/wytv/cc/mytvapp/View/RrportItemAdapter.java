@@ -8,9 +8,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wytv.cc.mytvapp.Object.ScreenReportObject;
 import com.wytv.cc.mytvapp.R;
@@ -21,23 +23,29 @@ import java.util.HashMap;
 
 public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+
     public static enum ITEM_TYPE {
         ITEM_TYPE_FIRST,
         ITEM_TYPE_LEFT,
         ITEM_TYPE_TOP,
-        ITEM_TYPE_CONTENT;
+        ITEM_TYPE_CONTENT,
+        ITEM_TYPE_MORE,
+        ITEM_TYPE_BTN;
+
     }
 
+    public String currentType = ScreenReportObject.TYPE_DAY;
     private ScreenReportObject screenReportObject;
     private Context context;
     private LayoutInflater inf;
     private int width;
     public MyMainActivity activity;
 
-    public RrportItemAdapter(ScreenReportObject screenReportObject, Context context, MyMainActivity activity) {
+    public RrportItemAdapter(ScreenReportObject screenReportObject, Context context, MyMainActivity activity, String currentType) {
         this.screenReportObject = screenReportObject;
         this.context = context;
         this.activity = activity;
+        this.currentType = currentType;
         inf = LayoutInflater.from(context);
         if (screenReportObject != null && screenReportObject.getReportByDates() != null && screenReportObject.getReportByDates().size() > 0) {
             width = (CommonUtils.getScreenWidth(context) - CommonUtils.dip2px(context, 80)) / (screenReportObject.getReportByDates().size() + 1);
@@ -53,8 +61,14 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 position < screenReportObject.getReportByDates().size() + 1)
             return ITEM_TYPE.ITEM_TYPE_TOP.ordinal();
         if (screenReportObject != null && screenReportObject.getReportByDates() != null &&
-                position % (screenReportObject.getReportByDates().size() + 1) == 0)
+                position == screenReportObject.getReportByDates().size() + 1)
+            return ITEM_TYPE.ITEM_TYPE_BTN.ordinal();
+        if (screenReportObject != null && screenReportObject.getReportByDates() != null &&
+                position % (screenReportObject.getReportByDates().size() + 2) == 0)
             return ITEM_TYPE.ITEM_TYPE_LEFT.ordinal();
+        if (screenReportObject != null && screenReportObject.getReportByDates() != null &&
+                position % (screenReportObject.getReportByDates().size() + 2) == screenReportObject.getReportByDates().size() + 1)
+            return ITEM_TYPE.ITEM_TYPE_MORE.ordinal();
         return ITEM_TYPE.ITEM_TYPE_CONTENT.ordinal();
     }
 
@@ -67,11 +81,57 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return new TopViewHolder(inf.inflate(R.layout.layout_report_title, parent, false), context);
         } else if (viewType == ITEM_TYPE.ITEM_TYPE_FIRST.ordinal()) {
             return new FirstViewHolder(inf.inflate(R.layout.layout_report_title, parent, false), context);
+        } else if ((viewType == ITEM_TYPE.ITEM_TYPE_MORE.ordinal())) {
+            return new MoreViewHolder(inf.inflate(R.layout.layout_report_more, parent, false), context);
+        } else if ((viewType == ITEM_TYPE.ITEM_TYPE_BTN.ordinal())) {
+            return new BtnViewHolder(inf.inflate(R.layout.layout_report_btn, parent, false), context);
         } else {
             return new ContentViewHolder(inf.inflate(R.layout.layout_report_itme, parent, false));
         }
     }
 
+
+    private class BtnClickListener implements View.OnClickListener {
+        BtnViewHolder viewHolder;
+
+        public BtnClickListener(BtnViewHolder viewHolder) {
+            this.viewHolder = viewHolder;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (currentType == ScreenReportObject.TYPE_DAY) {
+                currentType = ScreenReportObject.TYPE_WEEK;
+            } else if (currentType == ScreenReportObject.TYPE_WEEK) {
+                currentType = ScreenReportObject.TYPE_MONTH;
+            } else if (currentType == ScreenReportObject.TYPE_MONTH) {
+                currentType = ScreenReportObject.TYPE_DAY;
+            }
+            setBtnBg(currentType, viewHolder);
+            if (onTypeClickListener != null)
+                onTypeClickListener.onTypeClick(v, currentType);
+        }
+    }
+
+    ;
+
+    private void setBtnBg(String type, BtnViewHolder viewHolder) {
+        if (type == ScreenReportObject.TYPE_WEEK) {
+            viewHolder.dayBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+            viewHolder.weekBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_selector));
+            viewHolder.monthBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+
+        } else if (type == ScreenReportObject.TYPE_MONTH) {
+            viewHolder.dayBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+            viewHolder.weekBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+            viewHolder.monthBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_selector));
+
+        } else if (type == ScreenReportObject.TYPE_DAY) {
+            viewHolder.dayBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_selector));
+            viewHolder.weekBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+            viewHolder.monthBtn.setBackground(context.getResources().getDrawable(R.drawable.chat_btn_noselect_selector));
+        }
+    }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
@@ -91,19 +151,42 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String left = "";
             if (screenReportObject != null && screenReportObject.getField() != null && screenReportObject.getReportByDates() != null
                     && screenReportObject.getReportByDates().size() > 0
-                    && (position % (screenReportObject.getReportByDates().size() + 1)) < screenReportObject.getField().size() + 1) {
-                String key = screenReportObject.getField().get(position / (screenReportObject.getReportByDates().size() + 1) - 1);
+                    && (position /(screenReportObject.getReportByDates().size() + 2)) < screenReportObject.getField().size() + 1) {
+                String key = screenReportObject.getField().get(position / (screenReportObject.getReportByDates().size() + 2) - 1);
                 if (screenReportObject.getField_text() != null)
                     left = screenReportObject.getField_text().get(key);
             }
             ((LeftViewHolder) holder).tv_left.setText(left);
+        } else if (holder instanceof BtnViewHolder) {
+            BtnViewHolder btnViewHolder = (BtnViewHolder) holder;
+            setBtnBg(currentType, btnViewHolder);
+            btnViewHolder.root.setOnClickListener(new BtnClickListener(btnViewHolder));
+        } else if (holder instanceof MoreViewHolder) {
+            MoreViewHolder moreViewHolder = (MoreViewHolder) holder;
+            String  key = "";
+            String  value = "";
+            if (screenReportObject != null && screenReportObject.getField() != null && screenReportObject.getReportByDates() != null
+                    && screenReportObject.getReportByDates().size() > 0
+                    && (position / (screenReportObject.getReportByDates().size() + 2)) < screenReportObject.getField().size() + 1) {
+                 key = screenReportObject.getField().get(position / (screenReportObject.getReportByDates().size() + 2) - 1);
+                if (screenReportObject.getField_text() != null)
+                    value = screenReportObject.getField_text().get(key);
+            }
+            final String type = key;
+            final String id = value;
+            moreViewHolder.root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.showMyDialog(MyMainActivity.DATA_TYPE_REPORT_MORE, type, id);
+                }
+            });
         } else if (holder instanceof ContentViewHolder) {
             ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
             ScreenReportObject.ReportItem reportItem = null;
             if (screenReportObject == null || screenReportObject.getReportByDates() == null || screenReportObject.getField() == null)
                 return;
-            int line = position / (screenReportObject.getReportByDates().size() + 1);
-            int count = (position % (screenReportObject.getReportByDates().size() + 1)) - 1;
+            int line = position / (screenReportObject.getReportByDates().size() + 2);
+            int count = (position % (screenReportObject.getReportByDates().size() + 2)) - 1;
             final String itemKey = screenReportObject.getField().get(line - 1);
             if (screenReportObject.getReportByDates().get(count) != null && screenReportObject.getReportByDates().get(count).getReportItem() != null)
                 reportItem = screenReportObject.getReportByDates().get(count).getReportItem().get(itemKey);
@@ -161,7 +244,7 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (screenReportObject == null || screenReportObject.getField() == null || screenReportObject.getField().size() == 0 ||
                 screenReportObject.getReportByDates() == null || screenReportObject.getReportByDates().size() == 0)
             return 0;
-        return (screenReportObject.getField().size() + 1) * (screenReportObject.getReportByDates().size() + 1);
+        return (screenReportObject.getField().size() + 1) * (screenReportObject.getReportByDates().size() + 2);
     }
 
     public static class FirstViewHolder extends RecyclerView.ViewHolder {
@@ -198,6 +281,28 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    public static class MoreViewHolder extends BaseViewHolder {
+
+        public TextView more;
+
+        public MoreViewHolder(View v, Context context) {
+            super(v);
+            more = v.findViewById(R.id.item_report_more);
+        }
+    }
+
+    public static class BtnViewHolder extends BaseViewHolder {
+
+        Button dayBtn, weekBtn, monthBtn;
+
+        public BtnViewHolder(View v, Context context) {
+            super(v);
+            dayBtn = v.findViewById(R.id.day);
+            weekBtn = v.findViewById(R.id.week);
+            monthBtn = v.findViewById(R.id.month);
+        }
+    }
+
     public static class ContentViewHolder extends BaseViewHolder {
 
         public TextView content_tv;
@@ -221,5 +326,18 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    public OnTypeClickListener getOnTypeClickListener() {
+        return onTypeClickListener;
+    }
 
+    public void setOnTypeClickListener(OnTypeClickListener onTypeClickListener) {
+        this.onTypeClickListener = onTypeClickListener;
+    }
+
+    private OnTypeClickListener onTypeClickListener;
+
+
+    public interface OnTypeClickListener {
+        public void onTypeClick(View v, String type);
+    }
 }

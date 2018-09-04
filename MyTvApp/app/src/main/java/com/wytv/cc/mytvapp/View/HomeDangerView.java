@@ -1,11 +1,15 @@
 package com.wytv.cc.mytvapp.View;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wytv.cc.mytvapp.Object.DengerObject;
@@ -103,6 +107,34 @@ public class HomeDangerView extends BaseView implements IBaseView {
             homeDatabaseItemLy.myMainActivity = activity instanceof MyMainActivity ? (MyMainActivity) activity : null;
             homeDatabaseItemLy.setBackgroundResource(dengerObject.getIs_error() == 1 ? R.drawable.danger_danger_selector : R.drawable.danger_nomal_selector);
             homeDatabaseItemLy.setData(dengerObject.getData());
+            homeDatabaseItemLy.setWaring(dengerObject.getCreate_time(),true,dengerObject.getIs_error() == 1);
         }
+        addMoreView();
     }
+
+    private void addMoreView() {
+        TextView textView = new TextView(getContext());
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+        int padding = CommonUtils.dip2px(getContext(), 10);
+        layoutParams.leftMargin = padding;
+        layoutParams.rightMargin = padding;
+        layoutParams.topMargin = padding;
+        layoutParams.bottomMargin = padding;
+        textView.setBackgroundResource(R.drawable.danger_nomal_selector);
+        textView.setText("更多>>");
+        textView.setTextColor(Color.WHITE);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        textView.setGravity(Gravity.CENTER);
+        textView.setPadding(CommonUtils.dip2px(getContext(), 2), 0, 0, CommonUtils.dip2px(getContext(), 2));
+        rootLy.addView(textView, layoutParams);
+        textView.setFocusable(true);
+        textView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (activity instanceof MyMainActivity)
+                    ((MyMainActivity) activity).showMyDialog(MyMainActivity.DATA_TYPE_FILE_MORE, "", "");
+            }
+        });
+    }
+
 }

@@ -30,7 +30,7 @@ public class PhotoItemAdapter extends RecyclerView.Adapter<PhotoItemAdapter.View
     DisplayImageOptions options = new DisplayImageOptions.Builder()
             .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
             .resetViewBeforeLoading(true).cacheOnDisk(true).cacheInMemory(true)
-            .imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
+            .bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
             .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
             .build();
 
