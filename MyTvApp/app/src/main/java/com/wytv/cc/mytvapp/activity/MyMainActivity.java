@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
@@ -165,13 +166,15 @@ public class MyMainActivity extends ComonActivity {
             public void onSuccess(String result) {
                 DialogFileObject dialogFileObject = DialogFileObject.getObj(result);
                 if (dialogFileObject != null) {
-                     if (dataType == DATA_TYPE_DATABASE_MORE) {
-                         dialogFileObject.setTitle("数据库更多");
-                    } else if (dataType == DATA_TYPE_FILE_MORE) {
-                         dialogFileObject.setTitle("文件更多");
-                    } else if (dataType == DATA_TYPE_REPORT_MORE) {
-                         dialogFileObject.setTitle("报告更多-" + id);
-                     }
+                    if (TextUtils.isEmpty(dialogFileObject.getTitle())) {
+                        if (dataType == DATA_TYPE_DATABASE_MORE) {
+                            dialogFileObject.setTitle("数据库更多");
+                        } else if (dataType == DATA_TYPE_FILE_MORE) {
+                            dialogFileObject.setTitle("文件更多");
+                        } else if (dataType == DATA_TYPE_REPORT_MORE) {
+                            dialogFileObject.setTitle("报告更多-" + id);
+                        }
+                    }
                     Message message = Message.obtain();
                     message.what = DIALOG_MESSAGE_SUCCESS;
                     message.obj = dialogFileObject;

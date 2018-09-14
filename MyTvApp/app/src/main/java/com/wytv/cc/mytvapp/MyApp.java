@@ -36,7 +36,8 @@ public class MyApp extends Application {
 
     private void initUrl() {
         if (TextUtils.isEmpty(MYSharePreference.getInstance().getBaseUrl())){
-            String url = CommonUtils.readAssetsTxt(this,"url");
+          //  String url = CommonUtils.readAssetsTxt(this,"url");
+            String url = getResources().getString(R.string.url);
             MYSharePreference.getInstance().setBaseUrl(url);
         }
         UrlUtils.BASE_URL = MYSharePreference.getInstance().getBaseUrl();
@@ -44,7 +45,8 @@ public class MyApp extends Application {
 
     private void initToken() {
         if (TextUtils.isEmpty(MYSharePreference.getInstance().getToken())){
-            String token = CommonUtils.readAssetsTxt(this,"token");
+            //String token = CommonUtils.readAssetsTxt(this,"token");
+            String token = getResources().getString(R.string.token);
             MYSharePreference.getInstance().setToken(token);
         }
 
