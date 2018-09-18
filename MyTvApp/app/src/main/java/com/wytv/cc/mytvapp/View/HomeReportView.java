@@ -3,16 +3,13 @@ package com.wytv.cc.mytvapp.View;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.wytv.cc.mytvapp.Object.ScreenReportObject;
-import com.wytv.cc.mytvapp.Object.ScreenSeverObject;
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.activity.MyMainActivity;
 import com.wytv.cc.mytvapp.http.MyHttp;

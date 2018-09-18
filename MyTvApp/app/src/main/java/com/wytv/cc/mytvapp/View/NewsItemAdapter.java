@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,19 +15,19 @@ import com.open.androidtvwidget.leanback.recycle.RecyclerViewTV;
 import com.wytv.cc.mytvapp.Object.NewsContentObject;
 import com.wytv.cc.mytvapp.R;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHolder> {
     private List<NewsContentObject.NewsObject> newsObjects;
-    private HashMap<String, NewsContentObject.NewsDate> dateHashMap;
+    private LinkedHashMap<String, NewsContentObject.NewsDate> dateHashMap;
     private Context context;
     private LayoutInflater inf;
     private int currentShow;
     private RecyclerViewTV recyclerViewTV;
 
     public NewsItemAdapter(List<NewsContentObject.NewsObject> newsObjects,
-                           HashMap<String, NewsContentObject.NewsDate> dateHashMap, Context context, RecyclerViewTV recyclerViewTV) {
+                           LinkedHashMap<String, NewsContentObject.NewsDate> dateHashMap, Context context, RecyclerViewTV recyclerViewTV) {
         this.dateHashMap = dateHashMap;
         this.newsObjects = newsObjects;
         this.context = context;
@@ -76,9 +75,6 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        if (holder == null) {
-            return;
-        }
         if (position == currentShow) {
             holder.contentTv.setVisibility(View.VISIBLE);
         } else {

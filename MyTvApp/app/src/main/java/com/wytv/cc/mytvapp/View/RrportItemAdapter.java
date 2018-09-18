@@ -19,7 +19,6 @@ import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.CommonUtils;
 import com.wytv.cc.mytvapp.activity.MyMainActivity;
 
-import java.util.HashMap;
 
 public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

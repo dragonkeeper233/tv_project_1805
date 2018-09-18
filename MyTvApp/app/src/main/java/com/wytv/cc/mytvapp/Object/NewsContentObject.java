@@ -10,8 +10,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 public class NewsContentObject {
     //
@@ -32,15 +32,15 @@ public class NewsContentObject {
 //    },
 //            ...
 //            ]
-    private HashMap<String, NewsDate> dates;
+    private LinkedHashMap<String, NewsDate> dates;
     private int left;
     private ArrayList<NewsObject> data;
 
-    public HashMap<String, NewsDate> getDates() {
+    public LinkedHashMap<String, NewsDate> getDates() {
         return dates;
     }
 
-    public void setDates(HashMap<String, NewsDate> dates) {
+    public void setDates(LinkedHashMap<String, NewsDate> dates) {
         this.dates = dates;
     }
 
@@ -159,7 +159,7 @@ public class NewsContentObject {
                 return null;
             }
             Gson gson = new Gson();
-            HashMap<String, NewsDate> newsDates = new HashMap<String, NewsDate>();
+            LinkedHashMap<String, NewsDate> newsDates = new LinkedHashMap<String, NewsDate>();
             Iterator it = dateJs.keys();
             String vol = "";//值
             String key = null;//键

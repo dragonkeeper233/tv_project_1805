@@ -2,13 +2,13 @@ package com.wytv.cc.mytvapp.Object;
 
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class ScreenMonitorObject {
     //    “date：时间”:{
@@ -63,17 +63,18 @@ public class ScreenMonitorObject {
     }
 
     public static ArrayList<ScreenMonitorObject> getObj (String body)  {
-        try {
-            JSONObject jsonObject = new JSONObject(body);
+            JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
             ArrayList<ScreenMonitorObject> screenMonitorObjects = null;
+
             if (jsonObject != null) {
                 screenMonitorObjects = new ArrayList<ScreenMonitorObject>();
-                Iterator it = jsonObject.keys();
-                String vol = "";//值
+                Iterator it = jsonObject.entrySet().iterator();
+                JsonObject vol = null;//值
                 String key = null;//键
                 while (it.hasNext()) {//遍历JSONObject
-                    key = (String) it.next().toString();
-                    vol = jsonObject.getString(key);
+                    Map.Entry entry = (Map.Entry)it.next();
+                    key = (String) entry.getKey();
+                    vol = (JsonObject) entry.getValue();
                     Gson gson = new Gson();
                     ScreenMonitorObject result = gson.fromJson(vol, ScreenMonitorObject.class);
                     result.setDate(key);
@@ -81,10 +82,5 @@ public class ScreenMonitorObject {
                 }
             }
             return screenMonitorObjects;
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-        return null;
     }
 }
