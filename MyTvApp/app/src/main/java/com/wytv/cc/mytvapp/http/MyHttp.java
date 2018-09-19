@@ -17,15 +17,32 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MyHttp {
+    private static OkHttpClient okHttpClient = null;
+
+    public static OkHttpClient getInstance() {
+        if (okHttpClient == null) {
+            //加同步安全
+            synchronized (MyHttp.class) {
+                if (okHttpClient == null) {
+                    //判空 为空创建实例
+                    // okHttpClient = new OkHttpClient();
+                    okHttpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS)
+                            .writeTimeout(20, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS).build();
+                }
+            }
+
+        }
+
+        return okHttpClient;
+    }
+
+
     public static void get(String url, String value, MyHttpCallback callback) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .build();
         //构造Request对象
         //采用建造者模式，链式调用指明进行Get请求,传入Get的请求地址
 //        ?_t=1526391481&token=12dL5F9tv0qww
         Request request = new Request.Builder().get().url(url + "?_t=" + System.currentTimeMillis() + "&token=" + UrlUtils.TOKEN + value).build();
-        Call call = client.newCall(request);
+        Call call = getInstance().newCall(request);
         //异步调用并设置回调函数
         resolveCall(call, callback);
     }
@@ -67,9 +84,6 @@ public class MyHttp {
 
 
     public static void post(String url, final MyHttpCallback callback) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .build();//创建OkHttpClient对象。
         FormBody.Builder formBody = new FormBody.Builder();//创建表单请求体
         formBody.add("_t", System.currentTimeMillis() + "");//传递键值对参数
         formBody.add("token", UrlUtils.TOKEN);//传递键值对参数
@@ -77,7 +91,7 @@ public class MyHttp {
                 .url(url)
                 .post(formBody.build())//传递请求体
                 .build();
-        Call call = client.newCall(request);
+        Call call = getInstance().newCall(request);
         resolveCall(call, callback);
     }
 

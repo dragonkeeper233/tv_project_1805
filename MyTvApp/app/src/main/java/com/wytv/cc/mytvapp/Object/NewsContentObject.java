@@ -3,15 +3,17 @@ package com.wytv.cc.mytvapp.Object;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class NewsContentObject {
     //
@@ -151,39 +153,42 @@ public class NewsContentObject {
     }
 
     public static NewsContentObject getObj(String result) {
-        try {
-            JSONObject rootJs = new JSONObject(result);
-            NewsContentObject newsContentObject = new NewsContentObject();
-            JSONObject dateJs = rootJs.getJSONObject("date");
-            if (dateJs == null) {
-                return null;
-            }
-            Gson gson = new Gson();
-            LinkedHashMap<String, NewsDate> newsDates = new LinkedHashMap<String, NewsDate>();
-            Iterator it = dateJs.keys();
-            String vol = "";//值
-            String key = null;//键
-            while (it.hasNext()) {//遍历JSONObj
-                key = (String) it.next().toString();
-                vol = dateJs.getString(key);
-                NewsDate newsDate = gson.fromJson(vol, NewsDate.class);
-                newsDates.put(key, newsDate);
-            }
-            newsContentObject.setDates(newsDates);
-            String myDataStr = rootJs.getString("data");
-            if (TextUtils.isEmpty(myDataStr)) {
-                return null;
-            }
-            Type type = new TypeToken<ArrayList<NewsObject>>() {
-            }.getType();
-            ArrayList<NewsObject> newsObjects = gson.fromJson(myDataStr, type);
-            newsContentObject.setData(newsObjects);
-            newsContentObject.setLeft(rootJs.getInt("left"));
-            return newsContentObject;
-        } catch (JSONException e) {
-            e.printStackTrace();
+        JsonObject rootJs = new JsonParser().parse(result).getAsJsonObject();
+        if (rootJs == null)
+            return null;
+        NewsContentObject newsContentObject = new NewsContentObject();
+        JsonObject dateJs = rootJs.getAsJsonObject("date");
+        if (dateJs == null) {
+            return null;
         }
-        return null;
+        Gson gson = new Gson();
+        LinkedHashMap<String, NewsDate> newsDates = new LinkedHashMap<String, NewsDate>();
+        Iterator it = dateJs.entrySet().iterator();
+        Object vol = "";//值
+        String key = null;//键
+        while (it.hasNext()) {//遍历JSONObj
+            Map.Entry entry = (Map.Entry) it.next();
+            key = (String) entry.getKey();
+            vol = entry.getValue();
+            if (!(vol instanceof JsonObject))
+                continue;
+            NewsDate newsDate = gson.fromJson((JsonObject) vol, NewsDate.class);
+            newsDates.put(key, newsDate);
+        }
+        newsContentObject.setDates(newsDates);
+        JsonArray myDataStr = rootJs.getAsJsonArray("data");
+        if (myDataStr == null) {
+            return null;
+        }
+        Type type = new TypeToken<ArrayList<NewsObject>>() {
+        }.getType();
+        ArrayList<NewsObject> newsObjects = gson.fromJson(myDataStr, type);
+        newsContentObject.setData(newsObjects);
+        try {
+            newsContentObject.setLeft(rootJs.getAsJsonPrimitive("left").getAsInt());
+        } catch (Exception e) {
+        }
+        return newsContentObject;
 
     }
 

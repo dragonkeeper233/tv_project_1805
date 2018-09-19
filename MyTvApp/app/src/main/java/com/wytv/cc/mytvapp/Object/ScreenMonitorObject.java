@@ -65,18 +65,19 @@ public class ScreenMonitorObject {
     public static ArrayList<ScreenMonitorObject> getObj (String body)  {
             JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
             ArrayList<ScreenMonitorObject> screenMonitorObjects = null;
-
             if (jsonObject != null) {
                 screenMonitorObjects = new ArrayList<ScreenMonitorObject>();
                 Iterator it = jsonObject.entrySet().iterator();
-                JsonObject vol = null;//值
+                Object vol = null;//值
                 String key = null;//键
                 while (it.hasNext()) {//遍历JSONObject
                     Map.Entry entry = (Map.Entry)it.next();
                     key = (String) entry.getKey();
-                    vol = (JsonObject) entry.getValue();
+                    vol = entry.getValue();
+                    if (!(vol instanceof JsonObject))
+                        continue;
                     Gson gson = new Gson();
-                    ScreenMonitorObject result = gson.fromJson(vol, ScreenMonitorObject.class);
+                    ScreenMonitorObject result = gson.fromJson((JsonObject)vol, ScreenMonitorObject.class);
                     result.setDate(key);
                     screenMonitorObjects.add(result);
                 }

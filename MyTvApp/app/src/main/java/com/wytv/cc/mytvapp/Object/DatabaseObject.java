@@ -1,12 +1,15 @@
 package com.wytv.cc.mytvapp.Object;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 public class DatabaseObject {
     //    “date：时间”:{
@@ -128,37 +131,43 @@ public class DatabaseObject {
     }
 
     public static ArrayList<DatabaseObject> getObj(String body){
-        try {
-            JSONObject jsonObject = new JSONObject(body);
+            JsonObject jsonObject = new JsonParser().parse(body).getAsJsonObject();
             ArrayList<DatabaseObject> databaseObjects = null;
             if (jsonObject != null) {
                 databaseObjects = new ArrayList<DatabaseObject>();
-                Iterator it = jsonObject.keys();
-                String vol = "";//值
+                Iterator it = jsonObject.entrySet().iterator();
+                Object vol = null;//值
                 String key = null;//键
                 while (it.hasNext()) {//遍历JSONObject
-                    key = (String) it.next().toString();
-                    vol = jsonObject.getString(key);
+                    Map.Entry entry = (Map.Entry)it.next();
+                    key = (String) entry.getKey();
+                    vol = entry.getValue();
                     DatabaseObject databaseObject = new DatabaseObject();
                     databaseObject.setDate(key);
-                    JSONObject itemObj = new JSONObject(vol);
-                    if (itemObj==null)
+                    if (vol==null||!(vol instanceof JsonObject))
                         continue;
-                    databaseObject.setTimeago(itemObj.getString("timeago"));
-                    databaseObject.setIs_warning(itemObj.optInt("is_warning"));
-                    databaseObject.create_time = itemObj.optString("create_time");
-                    JSONObject listObj = itemObj.getJSONObject("data");
-                    if (listObj==null)
+                    JsonObject itemObj = (JsonObject)vol;
+                    try {
+                        databaseObject.setTimeago(itemObj.getAsJsonPrimitive("timeago").getAsString());
+                        databaseObject.setIs_warning(itemObj.getAsJsonPrimitive("is_warning").getAsInt());
+                        databaseObject.create_time = itemObj.getAsJsonPrimitive("create_time").getAsString();
+                    }catch (Exception e){
+                    }
+                    JsonObject listObj = itemObj.getAsJsonObject("data");
+                    if (listObj == null)
                         continue;
-                    String itemvol = "";//值
+                    Object itemvol = "";//值
                     String itemkey = null;//键
                     ArrayList<Data> itemList =  new ArrayList<Data>();
-                    Iterator itemit = listObj.keys();
+                    Iterator itemit = listObj.entrySet().iterator();
                     while (itemit.hasNext()) {//遍历JSONObject
-                        itemkey = (String) itemit.next().toString();
-                        itemvol = listObj.getString(itemkey);
+                        Map.Entry chilEentry = (Map.Entry)itemit.next();
+                        itemkey = (String) chilEentry.getKey();
+                        itemvol = chilEentry.getValue();
+                        if (!(itemvol instanceof JsonObject))
+                            continue;
                         Gson gson = new Gson();
-                        Data data =  gson.fromJson(itemvol, Data.class);
+                        Data data =  gson.fromJson((JsonObject)itemvol, Data.class);
                         data.setTable(itemkey);
                         itemList.add(data);
                         }
@@ -167,9 +176,5 @@ public class DatabaseObject {
                 }
             }
             return databaseObjects;
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-        return null;
     }
 }

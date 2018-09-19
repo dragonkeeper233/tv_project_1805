@@ -69,6 +69,7 @@ public class ScreenReportObject {
     public void setReportByDates(ArrayList<ReportByDate> reportByDates) {
         this.reportByDates = reportByDates;
     }
+
     public static class ReportByDate {
         private String id;
         private String date;
@@ -154,36 +155,43 @@ public class ScreenReportObject {
             return null;
         Gson gson = new Gson();
         ScreenReportObject screenReportObject = gson.fromJson(reson, ScreenReportObject.class);
-            JsonObject jsonObject = new JsonParser().parse(reson).getAsJsonObject();
-            if (jsonObject == null)
-                return screenReportObject;
-            JsonObject listObj = jsonObject.getAsJsonObject("list");
-            if (listObj == null)
-                return screenReportObject;
-            ArrayList<ReportByDate> reportByDates= new ArrayList<ReportByDate> ();
-            Iterator it = listObj.entrySet().iterator();
-            String key = null;//键
-            JsonObject vol = null;//值
-            while (it.hasNext()) {//遍历
-                Map.Entry entry = (Map.Entry)it.next();
-                key = (String) entry.getKey();
-                vol = (JsonObject)entry.getValue();
-                if (vol != null) {
-                    JsonObject eventsObj = vol.getAsJsonObject("events");
-                    if (eventsObj != null) {
-                        Type type = new TypeToken<LinkedHashMap<String, ReportItem>>() {
-                        }.getType();
-                        LinkedHashMap<String, ReportItem> map = gson.fromJson(eventsObj, type);
-                        ReportByDate reportByDate = new ReportByDate();
-                        reportByDate.date = key;
-                        reportByDate.reportItem = map;
-                        String id = vol.getAsJsonPrimitive("id").getAsString();
-                        reportByDate.id =id;
-                        reportByDates.add(reportByDate);
+        JsonObject jsonObject = new JsonParser().parse(reson).getAsJsonObject();
+        if (jsonObject == null)
+            return screenReportObject;
+        JsonObject listObj = jsonObject.getAsJsonObject("list");
+        if (listObj == null)
+            return screenReportObject;
+        ArrayList<ReportByDate> reportByDates = new ArrayList<ReportByDate>();
+        Iterator it = listObj.entrySet().iterator();
+        String key = null;//键
+        Object vol = null;//值
+        while (it.hasNext()) {//遍历
+            Map.Entry entry = (Map.Entry) it.next();
+            key = (String) entry.getKey();
+            vol = entry.getValue();
+            if (!(vol instanceof JsonObject))
+                continue;
+            JsonObject itemVol =(JsonObject) vol;
+            if (itemVol != null) {
+                JsonObject eventsObj = itemVol.getAsJsonObject("events");
+                if (eventsObj != null) {
+                    Type type = new TypeToken<LinkedHashMap<String, ReportItem>>() {
+                    }.getType();
+                    LinkedHashMap<String, ReportItem> map = gson.fromJson(eventsObj, type);
+                    ReportByDate reportByDate = new ReportByDate();
+                    reportByDate.date = key;
+                    reportByDate.reportItem = map;
+                    try {
+                        String id = itemVol.getAsJsonPrimitive("id").getAsString();
+                        reportByDate.id = id;
+                    }catch (Exception e){
+
                     }
+                    reportByDates.add(reportByDate);
                 }
             }
-            screenReportObject.setReportByDates(reportByDates);
+        }
+        screenReportObject.setReportByDates(reportByDates);
 
         return screenReportObject;
     }
