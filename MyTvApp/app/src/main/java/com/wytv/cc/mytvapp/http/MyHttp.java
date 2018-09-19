@@ -1,10 +1,7 @@
 package com.wytv.cc.mytvapp.http;
 
-import android.os.Handler;
-import android.os.Message;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -59,20 +56,18 @@ public class MyHttp {
             public void onResponse(Call call, final Response response) throws IOException {
                 if (response.isSuccessful()) {
 
-                    try {
+
                         String body = response.body().string();
-                        JSONObject bodyObject = new JSONObject(body);
-                        if (bodyObject.getInt("status") == 1) {
-                            String data = bodyObject.getString("data");
+                        JsonObject bodyObject = new JsonParser().parse(body).getAsJsonObject();
+                        if (bodyObject!=null&&bodyObject.getAsJsonPrimitive("status")!=null
+                                &&bodyObject.getAsJsonPrimitive("status").getAsInt()==1) {
+                            String data = bodyObject.get("data")!=null?bodyObject.get("data").toString():"";
                             callback.onSuccess(data);
                         } else {
-                            if (callback != null)
-                                callback.onFailure(response.code(), bodyObject.getString("msg"));
+                            if (callback != null){
+                                callback.onFailure(response.code(), bodyObject.get("msg")!=null?bodyObject.getAsJsonPrimitive("msg").getAsString():"");
+                            }
                         }
-                    } catch (JSONException e) {
-                        if (callback != null)
-                            callback.onFailure(response.code(), "body解析错误");
-                    }
 
                 } else {
                     if (callback != null)

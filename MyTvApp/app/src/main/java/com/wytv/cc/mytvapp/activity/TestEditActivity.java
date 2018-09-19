@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wytv.cc.mytvapp.R;
@@ -24,6 +25,8 @@ public class TestEditActivity extends ControlActivity implements View.OnClickLis
         setContentView(R.layout.activity_edit_test);
         tokenEt = (EditText) findViewById(R.id.token_edt);
         urlEt = (EditText) findViewById(R.id.url_edt);
+        TextView textView = findViewById(R.id.version);
+        textView.setText("当前版本"+1.0);
         findViewById(R.id.ok).setOnClickListener(this);
         urlEt.setText(UrlUtils.BASE_URL);
         tokenEt.setText(UrlUtils.TOKEN);

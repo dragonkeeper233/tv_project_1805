@@ -3,10 +3,10 @@ package com.wytv.cc.mytvapp.Object;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -44,11 +44,10 @@ public class VideoObject {
     }
 
     public static ArrayList<VideoObject> getList(String jsStr) {
-        try {
-            JSONObject jsonObject = new JSONObject(jsStr);
+            JsonObject jsonObject = new JsonParser().parse(jsStr).getAsJsonObject();
             if (jsonObject != null) {
-                String resultStr = jsonObject.getString("data");
-                String image = jsonObject.getString("image");
+                JsonElement resultStr = jsonObject.get("data");
+                String image = jsonObject.get("image")==null?"":jsonObject.getAsJsonPrimitive("image").getAsString();
                 Type type = new TypeToken<ArrayList<VideoObject>>() {
                 }.getType();
                 Gson gson = new Gson();
@@ -61,9 +60,6 @@ public class VideoObject {
                 }
                 return result;
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 }

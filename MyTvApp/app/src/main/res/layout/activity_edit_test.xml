@@ -128,4 +128,12 @@
         android:gravity="center"
         android:text="修改完毕请重启app"
         android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textSize="20dp" />
 </LinearLayout>

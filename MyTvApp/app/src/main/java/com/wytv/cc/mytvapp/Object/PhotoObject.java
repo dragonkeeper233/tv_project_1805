@@ -1,10 +1,10 @@
 package com.wytv.cc.mytvapp.Object;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,19 +34,15 @@ public class PhotoObject {
     }
 
     public static ArrayList<PhotoObject> getList(String jsStr) {
-        try {
-            JSONObject jsonObject = new JSONObject(jsStr);
+        JsonObject jsonObject = new JsonParser().parse(jsStr).getAsJsonObject();
             if (jsonObject != null) {
-                String resultStr = jsonObject.getString("data");
+                JsonElement resultStr = jsonObject.get("data");
                 Type type = new TypeToken<ArrayList<PhotoObject>>() {
                 }.getType();
                 Gson gson = new Gson();
                 ArrayList<PhotoObject> result = gson.fromJson(resultStr, type);
                 return result;
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 }
