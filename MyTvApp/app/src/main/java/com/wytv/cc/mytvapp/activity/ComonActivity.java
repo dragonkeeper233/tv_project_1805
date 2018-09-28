@@ -28,7 +28,7 @@ public abstract class ComonActivity extends ControlActivity implements OnCountDo
         customDialog = new LoadProgressDialog(this,
                 R.style.CustomProgressDialog, R.layout.progress_dialog,
                 R.anim.rotate_refresh, 0, R.drawable.loading_refresh,
-                0, "正在获取数据请稍后");
+                0, getResources().getString(R.string.dialog_loading_msg));
         customDialog.setCancelable(false);
     }
 

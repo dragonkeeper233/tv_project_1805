@@ -52,4 +52,6 @@
     <string name="toast_error_video_list">视频列表数据刷新失败</string>
     <string name="toast_error_news_base">文章基础数据刷新失败</string>
     <string name="toast_error_news_list">文章列表数据刷新失败</string>
+    <string name="dialog_loading_msg">正在获取数据请稍后</string>
+
 </resources>

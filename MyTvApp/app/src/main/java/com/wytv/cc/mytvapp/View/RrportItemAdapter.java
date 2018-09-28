@@ -21,7 +21,7 @@ import com.wytv.cc.mytvapp.activity.MyMainActivity;
 
 
 public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private String addStr,updateStr,deleteStr;
 
     public static enum ITEM_TYPE {
         ITEM_TYPE_FIRST,
@@ -45,6 +45,11 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.context = context;
         this.activity = activity;
         this.currentType = currentType;
+        if (context != null) {
+            addStr = context.getResources().getString(R.string.add);
+            updateStr = context.getResources().getString(R.string.update);
+            deleteStr = context.getResources().getString(R.string.delete);
+        }
         inf = LayoutInflater.from(context);
         if (screenReportObject != null && screenReportObject.getReportByDates() != null && screenReportObject.getReportByDates().size() > 0) {
             width = (CommonUtils.getScreenWidth(context) - CommonUtils.dip2px(context, 80)) / (screenReportObject.getReportByDates().size() + 1);
@@ -193,11 +198,11 @@ public class RrportItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 final String id = screenReportObject.getReportByDates().get(count).getId();
                 String tlStr = "";
                 if (reportItem.getAdd() > 0)
-                    tlStr = tlStr + "增加" + reportItem.getAdd();
+                    tlStr = tlStr + addStr + reportItem.getAdd();
                 if (reportItem.getUpdate() > 0)
-                    tlStr = tlStr + "更新" + reportItem.getUpdate();
+                    tlStr = tlStr + updateStr + reportItem.getUpdate();
                 if (reportItem.getDelete() > 0)
-                    tlStr = tlStr + "删除" + reportItem.getDelete();
+                    tlStr = tlStr + deleteStr + reportItem.getDelete();
                 contentViewHolder.content_tv.setText(tlStr);
                 if (reportItem.getStatus() == 3) {
                     contentViewHolder.content_tv.setTextColor(context.getResources().getColor(R.color.chat_line_red_color));

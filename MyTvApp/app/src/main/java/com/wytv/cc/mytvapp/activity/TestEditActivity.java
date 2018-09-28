@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.wytv.cc.mytvapp.R;
 import com.wytv.cc.mytvapp.Utils.MYSharePreference;
+import com.wytv.cc.mytvapp.Utils.VersionUtils;
 import com.wytv.cc.mytvapp.http.UrlUtils;
 
 public class TestEditActivity extends ControlActivity implements View.OnClickListener {
@@ -26,7 +27,7 @@ public class TestEditActivity extends ControlActivity implements View.OnClickLis
         tokenEt = (EditText) findViewById(R.id.token_edt);
         urlEt = (EditText) findViewById(R.id.url_edt);
         TextView textView = findViewById(R.id.version);
-        textView.setText("当前版本"+1.0);
+        textView.setText("当前版本"+ VersionUtils.getVersionName(this));
         findViewById(R.id.ok).setOnClickListener(this);
         urlEt.setText(UrlUtils.BASE_URL);
         tokenEt.setText(UrlUtils.TOKEN);
